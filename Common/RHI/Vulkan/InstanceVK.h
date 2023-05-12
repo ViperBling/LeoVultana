@@ -1,14 +1,12 @@
-//
-// Created by qiuso on 2023/5/11.
-//
+﻿#pragma once
 
-#ifndef LEOVULTANA_INSTANCEVK_H
-#define LEOVULTANA_INSTANCEVK_H
+#include "PCHVK.h"
+#include "InstancePropertiesVK.h"
 
-
-class InstanceVK {
-
-};
-
-
-#endif //LEOVULTANA_INSTANCEVK_H
+namespace LeoVultana_VK
+{
+    // 创建实例
+    bool CreateInstance(const char* pAppName, const char* pEngineName, VkInstance* pVulkanInst, VkPhysicalDevice* pPhysicalDevice, InstanceProperties* pInstProps);
+    VkInstance CreateInstance(VkApplicationInfo appInfo, InstanceProperties* pInstProps);
+    void DestroyInstance(VkInstance instance);
+}

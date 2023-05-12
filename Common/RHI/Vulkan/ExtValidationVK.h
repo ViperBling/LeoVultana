@@ -1,14 +1,13 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_EXTVALIDATIONVK_H
-#define LEOVULTANA_EXTVALIDATIONVK_H
+#include "InstancePropertiesVK.h"
+#include "DevicePropertiesVK.h"
 
+namespace LeoVultana_VK
+{
+    bool ExtDebugReportCheckInstanceExtensions(InstanceProperties* pInstProps, bool gpuValidation);
+    void ExtDebugReportGetProcAddress(VkInstance instance);
 
-class ExtValidationVK {
-
-};
-
-
-#endif //LEOVULTANA_EXTVALIDATIONVK_H
+    void ExtDebugReportOnCreate(VkInstance instance);
+    void ExtDebugReportOnDestroy(VkInstance instance);
+}

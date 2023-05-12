@@ -1,14 +1,28 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_DEVICEPROPERTIESVK_H
-#define LEOVULTANA_DEVICEPROPERTIESVK_H
+#include "PCHVK.h"
 
+namespace LeoVultana_VK
+{
+    class DeviceProperties
+    {
+    public:
+        void Init(VkPhysicalDevice physicalDevice);
+        bool AddDeviceExtensionName(const char* deviceExtensionName);
 
-class DevicePropertiesVK {
+        void * GetNext() { return m_pNext; }
+        void SetNewNext(void* pNext) { m_pNext = pNext; }
 
-};
+        VkPhysicalDevice GetPhysicalDevice() { return mPhysicalDevice; }
+        void GetExtensionNamesAndConfigs(std::vector<const char*>* pDeviceExtName);
 
+    private:
+        bool IsExtensionPresent(const char* pExtName);
 
-#endif //LEOVULTANA_DEVICEPROPERTIESVK_H
+    private:
+        VkPhysicalDevice mPhysicalDevice;
+        std::vector<const char*> mDeviceExtNames;
+        std::vector<VkExtensionProperties> mDeviceExtProperties;
+        void* m_pNext{};
+    };
+}

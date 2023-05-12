@@ -19,10 +19,11 @@ endforeach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
 add_compile_options(/MP)
 
 # reference libs used by both backends
-include_directories(External)
-include_directories(External/GLM)
-include_directories(External/ImGui)
-include_directories(External/TinyGLTF)
+include_directories(Externals)
+include_directories(Externals/GLM)
+include_directories(Externals/ImGui)
+include_directories(Externals/TinyGLTF)
+include_directories(Externals/Json)
 
 if (NOT CMAKE_VERSION VERSION_LESS 3.7.0)
     message(STATUS "Using module to find Vulkan")

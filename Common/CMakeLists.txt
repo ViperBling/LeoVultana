@@ -1,8 +1,12 @@
-file(GLOB_RECURSE Common_SRC "*.cpp" ".hpp" ".h")
+file(GLOB_RECURSE Common_SRC "*.cpp" ".hpp" ".h" "../Externals/ImGui/*.cpp")
 file(GLOB_RECURSE Common_HEAD "*.hpp" "*.h")
+
+include_directories(Function)
+include_directories(GLTF)
+include_directories(RHI)
+include_directories(Utilities)
 
 add_library(CommonLib STATIC ${Common_SRC} ${Common_HEAD})
 
-#target_link_libraries(CommonLib PUBLIC NJSON )
-target_link_directories(CommonLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
+target_link_libraries(CommonLib PUBLIC user32 d3d11 d3dcompiler dxgi)
+#target_link_directories(CommonLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,14 +1,17 @@
-//
-// Created by qiuso on 2023/5/11.
-//
+#pragma once
 
-#ifndef LEOVULTANA_BENCHMARK_H
-#define LEOVULTANA_BENCHMARK_H
+#include "PCH.h"
+#include "json.h"
+#include "Camera.h"
+#include "GLTFCommon.h"
 
+using json = nlohmann::json;
 
-class Benchmark {
-
+struct TimeStamp
+{
+    std::string mLabel;
+    float mMicroseconds;
 };
 
-
-#endif //LEOVULTANA_BENCHMARK_H
+void BenchmarkConfig(const json& benchmark, int cameraId, GLTFCommon *pGltfLoader, const std::string& deviceName = "not set", const std::string& driverVersion = "not set");
+float BenchmarkLoop(const std::vector<TimeStamp> &timeStamps, Camera *pCam, std::string& outScreenShotName);

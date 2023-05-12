@@ -1,0 +1,14 @@
+//
+// Created by Administrator on 2023/5/12.
+//
+
+#ifndef LEOVULTANA_GLTFMOTIONVECTORSPASS_H
+#define LEOVULTANA_GLTFMOTIONVECTORSPASS_H
+
+
+class GLTFMotionVectorsPass {
+
+};
+
+
+#endif //LEOVULTANA_GLTFMOTIONVECTORSPASS_H

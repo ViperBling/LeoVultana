@@ -41,11 +41,11 @@ namespace LeoVultana_VK
         VkPhysicalDeviceProperties GetPhysicalDeviceProperties() { return mDeviceProperties; }
         VkPhysicalDeviceSubgroupProperties GetPhysicalDeviceSubgroupProperties() { return mSubgroupProperties; }
 
-        bool IsFp16Supported() { return mUsingFp16; };
-        bool IsRT10Supported() { return mRt10Supported; }
-        bool IsRT11Supported() { return mRt11Supported; }
-        bool IsVRSTier1Supported() { return mVrs1Supported; }
-        bool IsVRSTier2Supported() { return mVrs2Supported; }
+        bool IsFP16Supported() const { return mUsingFP16; };
+        bool IsRT10Supported() const { return mRT10Supported; }
+        bool IsRT11Supported() const { return mRT11Supported; }
+        bool IsVRSTier1Supported() const { return mVRS1Supported; }
+        bool IsVRSTier2Supported() const { return mVRS2Supported; }
 
         // Pipeline Cache
         void CreatePipelineCache();
@@ -79,11 +79,11 @@ namespace LeoVultana_VK
         uint32_t mComputeQueueFamilyIndex;
 
         bool mUsingValidationLayer = false;
-        bool mUsingFp16 = false;
-        bool mRt10Supported = false;
-        bool mRt11Supported = false;
-        bool mVrs1Supported = false;
-        bool mVrs2Supported = false;
+        bool mUsingFP16 = false;
+        bool mRT10Supported = false;
+        bool mRT11Supported = false;
+        bool mVRS1Supported = false;
+        bool mVRS2Supported = false;
 #ifdef USE_VMA
         VmaAllocator m_hAllocator = nullptr;
 #endif

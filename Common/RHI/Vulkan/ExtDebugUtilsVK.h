@@ -1,14 +1,13 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_EXTDEBUGUTILS_H
-#define LEOVULTANA_EXTDEBUGUTILS_H
+#include "Vulkan/vulkan.h"
+#include "InstancePropertiesVK.h"
 
-
-class ExtDebugUtils {
-
-};
-
-
-#endif //LEOVULTANA_EXTDEBUGUTILS_H
+namespace LeoVultana_VK
+{
+    void ExtDebugUtilsGetProAddresses(VkDevice device);
+    bool ExtDebugUtilsCheckInstanceExtensions(InstanceProperties* pInstanceProp);
+    void SetResourceName(VkDevice device, VkObjectType objectType, uint64_t handle, const char* name);
+    void SetPerfMarkerBegin(VkCommandBuffer cmdBuffer, const char* name);
+    void SetPerfMarkerEnd(VkCommandBuffer cmdBuffer);
+}

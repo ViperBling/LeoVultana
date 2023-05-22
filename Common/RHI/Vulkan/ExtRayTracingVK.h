@@ -1,14 +1,9 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_EXTRAYTRACINGVK_H
-#define LEOVULTANA_EXTRAYTRACINGVK_H
+#include "DevicePropertiesVK.h"
+#include "InstancePropertiesVK.h"
 
-
-class ExtRayTracingVK {
-
-};
-
-
-#endif //LEOVULTANA_EXTRAYTRACINGVK_H
+namespace LeoVultana_VK
+{
+    bool ExtRTCheckExtensions(DeviceProperties* pDP, bool& RT10Supported, bool& RT11Supported);
+}

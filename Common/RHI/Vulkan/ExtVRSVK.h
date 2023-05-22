@@ -1,14 +1,9 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_EXTVRSVK_H
-#define LEOVULTANA_EXTVRSVK_H
+#include "DevicePropertiesVK.h"
+#include "InstancePropertiesVK.h"
 
-
-class ExtVRSVK {
-
-};
-
-
-#endif //LEOVULTANA_EXTVRSVK_H
+namespace LeoVultana_VK
+{
+    void ExtVRSCheckExtensions(DeviceProperties* pDeviceProp, bool& Tier1Supported,  bool& Tier2Supported);
+}

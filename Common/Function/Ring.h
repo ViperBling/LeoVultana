@@ -57,6 +57,7 @@ private:
 
 class RingWithTabs
 {
+public:
     void OnCreate(uint32_t numberOfBackBuffers, uint32_t memTotalSize)
     {
         mBackBufferIndex = 0;

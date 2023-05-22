@@ -50,7 +50,7 @@ namespace LeoVultana_VK
         // Pipeline Cache
         void CreatePipelineCache();
         void DestroyPipelineCache();
-        VkPipelineCache GetPipelineCache();
+        VkPipelineCache GetPipelineCache() { return mPipelineCache; }
 
         void CreateShaderCache() {};
         void DestroyShaderCache() {};

@@ -51,7 +51,7 @@ void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, 
     allocateInfo.allocationSize = memRequirements.size;
     allocateInfo.memoryTypeIndex = 0;
 
-    bool pass = MemoryTypeFromProperties()
+
 //#endif
 }
 

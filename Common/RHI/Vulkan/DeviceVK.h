@@ -88,4 +88,6 @@ namespace LeoVultana_VK
         VmaAllocator m_hAllocator = nullptr;
 #endif
     };
+
+    bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties& memoryProp, uint32_t typeBits, VkFlags requirementsMask, uint32_t* typeIndex);
 }

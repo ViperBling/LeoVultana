@@ -290,23 +290,22 @@ void Device::GPUFlush()
     vkDeviceWaitIdle(mDevice);
 }
 
-namespace LeoVultana_VK
+
+bool LeoVultana_VK::MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties &memoryProp, uint32_t typeBits, VkFlags requirementsMask, uint32_t *typeIndex)
 {
-    bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties &memoryProp, uint32_t typeBits, VkFlags requirementsMask, uint32_t *typeIndex) {
-        // Search memtypes to find first index with those properties
-        for (uint32_t i = 0; i < memoryProp.memoryTypeCount; i++)
-        {
-            if ((typeBits & 1) == 1) {
-                // Type is available, does it match user properties?
-                if ((memoryProp.memoryTypes[i].propertyFlags & requirementsMask) == requirementsMask)
-                {
-                    *typeIndex = i;
-                    return true;
-                }
+    // Search memtypes to find first index with those properties
+    for (uint32_t i = 0; i < memoryProp.memoryTypeCount; i++)
+    {
+        if ((typeBits & 1) == 1) {
+            // Type is available, does it match user properties?
+            if ((memoryProp.memoryTypes[i].propertyFlags & requirementsMask) == requirementsMask)
+            {
+                *typeIndex = i;
+                return true;
             }
-            typeBits >>= 1;
         }
-        // No memory types matched, return failure
-        return false;
+        typeBits >>= 1;
     }
+    // No memory types matched, return failure
+    return false;
 }

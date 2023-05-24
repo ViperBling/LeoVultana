@@ -39,6 +39,19 @@ void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, 
     bufferCI.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
     bufferCI.flags = 0;
     VK_CHECK_RESULT(vkCreateBuffer(m_pDevice->GetDevice(), &bufferCI, nullptr, &mBuffer));
+
+    VkMemoryRequirements memRequirements{};
+    vkGetBufferMemoryRequirements(m_pDevice->GetDevice(), mBuffer, &memRequirements);
+
+    VkMemoryAllocateInfo allocateInfo{};
+    allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    allocateInfo.pNext = nullptr;
+    allocateInfo.memoryTypeIndex = 0;
+    allocateInfo.memoryTypeIndex = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+    allocateInfo.allocationSize = memRequirements.size;
+    allocateInfo.memoryTypeIndex = 0;
+
+    bool pass = MemoryTypeFromProperties()
 //#endif
 }
 

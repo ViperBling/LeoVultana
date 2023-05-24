@@ -30,7 +30,7 @@ namespace LeoVultana_VK
         bool AllocateVertexBuffer(uint32_t numberOfVertices, uint32_t strideInBytes, void** pData, VkDescriptorBufferInfo* pOut);
         bool AllocateIndexBuffer(uint32_t numberOfIndices, uint32_t strideInBytes, void** pData, VkDescriptorBufferInfo* pOut);
         void OnBeginFrame();
-        void SetDescriptorSet(int i, uint32_t sizse, VkDescriptorSet descriptorSet);
+        void SetDescriptorSet(int index, uint32_t size, VkDescriptorSet descriptorSet);
 
     private:
         Device*         m_pDevice{};

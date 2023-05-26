@@ -48,9 +48,9 @@ namespace LeoVultana_VK
         inline bool               GetLocalDimmingEnableState() const { return mEnableLocalDimming; }
 
     protected:
-        LPCSTR  mName;
-        int     mWidth;
-        int     mHeight;
+        LPCSTR     mName;
+        uint32_t   mWidth;
+        uint32_t   mHeight;
 
         // Simulation Management
         double mLastFrameTime;

@@ -263,10 +263,11 @@ void Device::GetDeviceInfo(std::string *deviceName, std::string *driverVersion)
 {
 #define EXTRACT(v,offset, length) ((v>>offset) & ((1<<length)-1))
     *deviceName = mDeviceProperties.deviceName;
-    *driverVersion = format("%i.%i.%i",
-                            EXTRACT(mDeviceProperties.driverVersion, 22, 10),
-                            EXTRACT(mDeviceProperties.driverVersion, 14, 8),
-                            EXTRACT(mDeviceProperties.driverVersion, 0, 16));
+    *driverVersion = format(
+        "%i.%i.%i",
+        EXTRACT(mDeviceProperties.driverVersion, 22, 10),
+        EXTRACT(mDeviceProperties.driverVersion, 14, 8),
+        EXTRACT(mDeviceProperties.driverVersion, 0, 16));
 }
 
 void Device::CreatePipelineCache()

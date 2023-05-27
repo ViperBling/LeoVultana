@@ -89,5 +89,6 @@ namespace LeoVultana_VK
 #endif
     };
 
+    bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties&& memoryProp, uint32_t typeBits, VkFlags requirementsMask, uint32_t* typeIndex);
     bool MemoryTypeFromProperties(VkPhysicalDeviceMemoryProperties& memoryProp, uint32_t typeBits, VkFlags requirementsMask, uint32_t* typeIndex);
 }

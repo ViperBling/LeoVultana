@@ -482,6 +482,8 @@ VkImage Texture::CreateTextureCommitted(
     VK_CHECK_RESULT(vkAllocateMemory(pDevice->GetDevice(), &memAI, nullptr, &mDeviceMemory));
     VK_CHECK_RESULT(vkBindImageMemory(pDevice->GetDevice(), tex, mDeviceMemory, 0));
 #endif
+
+    return tex;
 }
 
 void Texture::LoadAndUpload(Device *pDevice, UploadHeap *pUploadHeap, ImgLoader *pDds, VkImage pTexture2D)

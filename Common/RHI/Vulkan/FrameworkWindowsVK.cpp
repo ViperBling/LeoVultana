@@ -1,4 +1,4 @@
-#include "PCHVK.h"
+﻿#include "PCHVK.h"
 #include "FrameworkWindowsVK.h"
 #include "Misc.h"
 #include "HelperVK.h"

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "PCHVK.h"
 #include "DevicePropertiesVK.h"
 #include "InstancePropertiesVK.h"

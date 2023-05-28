@@ -1,4 +1,4 @@
-#include "HelperVK.h"
+﻿#include "HelperVK.h"
 #include "DeviceVK.h"
 #include "InstanceVK.h"
 #include "ExtDebugUtilsVK.h"

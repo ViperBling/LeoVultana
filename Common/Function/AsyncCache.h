@@ -54,9 +54,9 @@ public:
             if (it == mDatabase.end())
             {
 #ifdef CACHE_LOG
-                Trace(format("thread 0x%04x Compi Begin: %p %i\n", GetCurrentThreadId(), hash, m_database[hash].m_Sync.Get()));
+                Trace(format("thread 0x%04x Compi Begin: %p %i\n", GetCurrentThreadId(), hash, mDatabase[hash].mSync.Get()));
 #endif
-                // inc syncing object so other threads requesting this same shader can tell there is a compilation in progress and they need to wait for this thread to finish.
+                // inc syncing object so other threads requesting this same shader can tell there is a compilation in progress, and they need to wait for this thread to finish.
                 mDatabase[hash].mSync.Inc();
                 return true;
             }
@@ -70,7 +70,7 @@ public:
 #ifdef CACHE_LOG
                 Trace(format("thread 0x%04x Wait: %p %i\n", GetCurrentThreadId(), hash, it->second.mSync.Get()));
 #endif
-                Async::Wait(&it->second.m_Sync);
+                Async::Wait(&it->second.mSync);
             }
 
             // if the shader was compiled then return it
@@ -99,10 +99,10 @@ public:
         Trace(format("thread 0x%04x Compi End: %p %i\n", GetCurrentThreadId(), hash, it->second.mSync.Get()));
 #endif
         it->second.mData = *pValue;
-        //assert(it->second.m_Sync.Get() == 1);
+        //assert(it->second.mSync.Get() == 1);
 
         // The shader has been compiled, set sync to 0 to indicate it is compiled
-        // This also wakes up all the threads waiting on  Async::Wait(&it->second.m_Sync);
+        // This also wakes up all the threads waiting on  Async::Wait(&it->second.mSync);
         it->second.mSync.Dec();
 #endif
     }

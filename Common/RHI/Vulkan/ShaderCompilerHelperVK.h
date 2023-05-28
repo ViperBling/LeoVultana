@@ -1,14 +1,39 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_SHADERCOMPILERHELPERVK_H
-#define LEOVULTANA_SHADERCOMPILERHELPERVK_H
+#include "DeviceVK.h"
+#include "ShaderCompiler.h"
+#include "DXCHelper.h"
 
+class Sync;
 
-class ShaderCompilerHelperVK {
+namespace LeoVultana_VK
+{
+    enum ShaderSourceType
+    {
+        SST_HLSL,
+        SST_GLSL
+    };
 
-};
+    void CreateShaderCache();
+    void DestroyShaderCache(Device* pDevice);
 
+    // Does as the function name says and uses a cache
+    VkResult VKCompileFromString(
+        VkDevice device,
+        ShaderSourceType sourceType,
+        VkShaderStageFlagBits shader_type,
+        const char *pShaderCode,
+        const char *pShaderEntryPoint,
+        const char *pExtraParams,
+        const DefineList *pDefines,
+        VkPipelineShaderStageCreateInfo *pShader);
 
-#endif //LEOVULTANA_SHADERCOMPILERHELPERVK_H
+    VkResult VKCompileFromFile(
+        VkDevice device,
+        VkShaderStageFlagBits shader_type,
+        const char *pFilename,
+        const char *pShaderEntryPoint,
+        const char *pExtraParams,
+        const DefineList *pDefines,
+        VkPipelineShaderStageCreateInfo *pShader);
+}

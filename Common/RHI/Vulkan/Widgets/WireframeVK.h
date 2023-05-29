@@ -1,14 +1,51 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_WIREFRAMEVK_H
-#define LEOVULTANA_WIREFRAMEVK_H
+#include "ResourceViewHeapsVK.h"
+#include "DynamicBufferRingVK.h"
+#include "StaticBufferPoolVK.h"
+#include "vectormath/vectormath.hpp"
 
+namespace LeoVultana_VK
+{
+    class Wireframe
+    {
+    public:
+        void OnCreate(
+            Device* pDevice,
+            VkRenderPass renderPass,
+            ResourceViewHeaps *pHeaps,
+            DynamicBufferRing *pDynamicBufferRing,
+            StaticBufferPool *pStaticBufferPool,
+            VkSampleCountFlagBits sampleDescCount);
 
-class WireframeVK {
+        void OnDestroy();
+        void Draw(
+            VkCommandBuffer cmdBuffer,
+            uint32_t numIndices,
+            VkDescriptorBufferInfo IBV,
+            VkDescriptorBufferInfo VBV,
+            const math::Matrix4& worldMatrix,
+            const math::Vector4& vCenter,
+            const math::Vector4& vRadius,
+            const math::Vector4& vColor);
 
-};
+    private:
+        Device*                 m_pDevice;
+        DynamicBufferRing*      m_pDynamicBufferRing;
+        ResourceViewHeaps*      m_pResourceViewHeaps;
 
+        VkPipeline              mPipeline;
+        VkPipelineLayout        mPipelineLayout;
 
-#endif //LEOVULTANA_WIREFRAMEVK_H
+        VkDescriptorSet         mDescriptorSet;
+        VkDescriptorSetLayout   mDescriptorSetLayout;
+
+        struct perObject
+        {
+            math::Matrix4 mWorldViewProj;
+            math::Vector4 mCenter;
+            math::Vector4 mRadius;
+            math::Vector4 mColor;
+        };
+    };
+}

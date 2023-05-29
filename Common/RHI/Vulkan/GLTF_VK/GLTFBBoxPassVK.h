@@ -1,14 +1,37 @@
-//
-// Created by Administrator on 2023/5/12.
-//
+#pragma once
 
-#ifndef LEOVULTANA_GLTFBBOXPASS_H
-#define LEOVULTANA_GLTFBBOXPASS_H
+#include "DeviceVK.h"
+#include "StaticBufferPoolVK.h"
+#include "ResourceViewHeapsVK.h"
+#include "DynamicBufferRingVK.h"
+#include "GLTFTexturesAndBuffersVK.h"
+#include "Widgets/WireframeBoxVK.h"
 
+namespace LeoVultana_VK
+{
+    class GLTFBoxPass
+    {
+    public:
+        void OnCreate(
+            Device* pDevice,
+            VkRenderPass renderPass,
+            ResourceViewHeaps *pHeaps,
+            DynamicBufferRing *pDynamicBufferRing,
+            StaticBufferPool *pStaticBufferPool,
+            GLTFTexturesAndBuffers *pGLTFTexturesAndBuffers,
+            Wireframe *pWireframe);
 
-class GLTFBBoxPass {
+        void OnDestroy();
+        void Draw(VkCommandBuffer cmdBuffer, const math::Matrix4& cameraViewProjMatrix, const math::Vector4& color);
+        inline void Draw(VkCommandBuffer cmdBuffer, const math::Matrix4& cameraViewProjMatrix)
+        {
+            Draw(cmdBuffer, cameraViewProjMatrix, math::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+        }
 
-};
+    private:
+        GLTFTexturesAndBuffers* m_pGLTFTexturesAndBuffers;
 
-
-#endif //LEOVULTANA_GLTFBBOXPASS_H
+        Wireframe*              m_pWireframe;
+        WireframeBox            mWireframeBox;
+    };
+}

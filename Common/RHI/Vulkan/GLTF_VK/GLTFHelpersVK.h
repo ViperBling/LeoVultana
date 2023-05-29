@@ -1,14 +1,10 @@
-//
-// Created by qiuso on 2023/5/11.
-//
+#pragma once
 
-#ifndef LEOVULTANA_GLTFHELPERSVK_H
-#define LEOVULTANA_GLTFHELPERSVK_H
+#include <Vulkan/vulkan.h>
+#include "GLTFHelpers.h"
 
-
-class GLTFHelpersVK {
-
-};
-
-
-#endif //LEOVULTANA_GLTFHELPERSVK_H
+namespace LeoVultana_VK
+{
+    VkFormat GetFormat(const std::string& str, int id);
+    uint32_t SizeOfFormat(VkFormat format);
+}

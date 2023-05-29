@@ -5,7 +5,7 @@ file(GLOB_RECURSE Common_SRC
     "../Externals/ImGui/*.cpp")
 
 file(GLOB_RECURSE Common_HEAD
-    "Function/.h"
+    "Function/*.h"
     "GLTF/*.h"
     "Utilities/*.h")
 
@@ -19,7 +19,5 @@ add_subdirectory(RHI/Vulkan)
 
 add_library(CommonLib STATIC ${Common_SRC} ${Common_HEAD})
 
-#target_link_libraries(CommonLib PUBLIC user32 d3d11 d3dcompiler dxgi)
 target_link_libraries(CommonLib PUBLIC user32 d3d11 d3dcompiler dxgi)
-
-#target_link_directories(CommonLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(CommonLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

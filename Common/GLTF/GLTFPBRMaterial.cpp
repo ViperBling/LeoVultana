@@ -1,4 +1,4 @@
-#include "GLTFPbrMaterial.h"
+#include "GLTFPBRMaterial.h"
 #include "GLTFHelpers.h"
 
 void SetDefaultMaterialParameters(PBRMaterialParameters *pPBRMaterialParam)

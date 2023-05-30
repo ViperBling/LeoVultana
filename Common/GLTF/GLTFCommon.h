@@ -75,7 +75,7 @@ public:
     void Unload();
 
     // misc functions
-    int FindMeshSkinId(int meshId) const;
+    int FindMeshSkinId(uint32_t meshId) const;
     int GetInverseBindMatricesBufferSizeByID(int id) const;
     void GetBufferDetails(int accessor, gltfAccessor *pAccessor) const;
     void GetAttributesAccessors(const json &gltfAttributes, std::vector<char*> *pStreamNames, std::vector<gltfAccessor> *pAccessors) const;

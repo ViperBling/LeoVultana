@@ -480,7 +480,7 @@ void GLTFCommon::GetAttributesAccessors(const json &gltfAttributes, std::vector<
 //
 // Given a mesh find the skin it belongs to
 //
-int GLTFCommon::FindMeshSkinId(int meshId) const
+int GLTFCommon::FindMeshSkinId(uint32_t meshId) const
 {
     for (int i = 0; i < mNodes.size(); i++)
     {

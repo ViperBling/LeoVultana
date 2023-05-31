@@ -3,7 +3,7 @@
 #include "DeviceVK.h"
 #include "UploadHeapVK.h"
 #include "ResourceViewHeapsVK.h"
-#include "DDSLoader.h"
+#include "Function/DDSLoader.h"
 #include "vulkan/vk_mem_alloc.h"
 
 namespace LeoVultana_VK

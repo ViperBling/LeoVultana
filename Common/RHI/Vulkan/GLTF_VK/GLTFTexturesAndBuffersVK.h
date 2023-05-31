@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GLTFCommon.h"
-#include "TextureVK.h"
-#include "ShaderCompiler.h"
-#include "StaticBufferPoolVK.h"
-#include "DynamicBufferRingVK.h"
+#include "GLTF/GLTFCommon.h"
+#include "RHI/Vulkan/TextureVK.h"
+#include "Utilities/ShaderCompiler.h"
+#include "RHI/Vulkan/StaticBufferPoolVK.h"
+#include "RHI/Vulkan/DynamicBufferRingVK.h"
 
 namespace LeoVultana_VK
 {

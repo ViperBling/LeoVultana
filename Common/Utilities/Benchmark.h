@@ -2,8 +2,8 @@
 
 #include "PCH.h"
 #include "json.h"
-#include "Camera.h"
-#include "GLTFCommon.h"
+#include "Function/Camera.h"
+#include "GLTF/GLTFCommon.h"
 
 using json = nlohmann::json;
 

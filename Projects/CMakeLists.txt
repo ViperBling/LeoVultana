@@ -3,10 +3,10 @@ function(buildProject PROJECT_NAME)
     message(STATUS "Generating project file for project in ${PROJECT_FOLDER}")
 
     # Main
-    file(GLOB_RECURSE PROJECT_SRC *.cpp ${Common_HEAD} ${PROJECT_FOLDER}/*.cpp)
+    file(GLOB_RECURSE PROJECT_SRC *.cpp ${Common_HEAD} ${PROJECT_FOLDER}/*.cpp ${PROJECT_FOLDER}/*.h)
 
     add_executable(${PROJECT_NAME} ${PROJECT_SRC})
-    target_link_libraries(${PROJECT_NAME} CommonLib ${Vulkan_LIBRARY} ${WINLIBS})
+    target_link_libraries(${PROJECT_NAME} CommonLib LeoVultanaVK ${Vulkan_LIBRARY} ${WINLIBS})
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)
 
 endfunction(buildProject)

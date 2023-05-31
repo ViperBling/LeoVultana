@@ -1,11 +1,11 @@
 #pragma once
 
-#include "DeviceVK.h"
-#include "StaticBufferPoolVK.h"
-#include "ResourceViewHeapsVK.h"
-#include "DynamicBufferRingVK.h"
+#include "RHI/Vulkan/DeviceVK.h"
+#include "RHI/Vulkan/StaticBufferPoolVK.h"
+#include "RHI/Vulkan/ResourceViewHeapsVK.h"
+#include "RHI/Vulkan/DynamicBufferRingVK.h"
 #include "GLTFTexturesAndBuffersVK.h"
-#include "Widgets/WireframeBoxVK.h"
+#include "RHI/Vulkan/Widgets/WireframeBoxVK.h"
 
 namespace LeoVultana_VK
 {

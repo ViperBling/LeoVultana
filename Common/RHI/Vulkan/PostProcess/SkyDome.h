@@ -1,8 +1,8 @@
 #pragma once
 
 #include "PostProcessPS.h"
-#include "TextureVK.h"
-#include "UploadHeapVK.h"
+#include "RHI/Vulkan/TextureVK.h"
+#include "RHI/Vulkan/UploadHeapVK.h"
 #include "vectormath/vectormath.hpp"
 
 namespace LeoVultana_VK

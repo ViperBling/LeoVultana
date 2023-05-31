@@ -1,8 +1,8 @@
 #pragma once
 
 #include "DeviceVK.h"
-#include "ShaderCompiler.h"
-#include "DXCHelper.h"
+#include "Utilities/ShaderCompiler.h"
+#include "Utilities/DXCHelper.h"
 
 class Sync;
 

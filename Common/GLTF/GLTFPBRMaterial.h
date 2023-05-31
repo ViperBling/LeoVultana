@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "GLTFHelpers.h"
-#include "ShaderCompiler.h"
+#include "Utilities/ShaderCompiler.h"
 
 struct PBRMaterialParametersConstantBuffer
 {

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "GLTFTexturesAndBuffersVK.h"
-#include "GBufferVK.h"
-#include "GLTFPBRMaterial.h"
-#include "PostProcess/SkyDome.h"
+#include "RHI/Vulkan/GBufferVK.h"
+#include "GLTF/GLTFPBRMaterial.h"
+#include "RHI/Vulkan/PostProcess/SkyDome.h"
 
 namespace LeoVultana_VK
 {

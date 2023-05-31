@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PCH.h"
-#include "Misc.h"
-#include "Hash.h"
+#include "Utilities/PCH.h"
+#include "Function/Misc.h"
+#include "Function/Hash.h"
 
 //
 // Hash a string of source code and recurse over its #include files

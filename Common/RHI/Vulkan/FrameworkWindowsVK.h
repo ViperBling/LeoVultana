@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Misc.h"
+#include "Function/Misc.h"
 #include "FreeSyncHDRVK.h"
 #include "DeviceVK.h"
 #include "SwapChainVK.h"
@@ -19,7 +19,7 @@ namespace LeoVultana_VK
         virtual void OnCreate() = 0;
         virtual void OnDestroy() = 0;
         virtual void OnRender() = 0;
-        virtual void OnEvent(MSG msg) = 0;
+        virtual bool OnEvent(MSG msg) = 0;
         virtual void OnResize(bool resizeRender) = 0;
         virtual void OnUpdateDisplay() = 0;
 

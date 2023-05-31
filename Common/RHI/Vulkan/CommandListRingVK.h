@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "PCHVK.h"
-#include "Ring.h"
+#include "Function/Ring.h"
 #include "DeviceVK.h"
 
 namespace LeoVultana_VK

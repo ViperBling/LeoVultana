@@ -89,14 +89,14 @@ public:
     }
 };
 
-bool DXCompileToDXO(
+bool DXCCompileToDXO(
     size_t hash,
-    const char *pSrcCode,
+    const char* pSrcCode,
     const DefineList* pDefines,
-    const char *pEntryPoint,
-    const char *pParams,
-    char **outSpvData,
-    size_t *outSpvSize)
+    const char* pEntryPoint,
+    const char* pParams,
+    char** outSpvData,
+    size_t* outSpvSize)
 {
     //detect output bytecode type (DXBC/SPIR-V) and use proper extension
     std::string filenameOut;

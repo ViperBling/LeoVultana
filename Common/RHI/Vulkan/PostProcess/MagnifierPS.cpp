@@ -1,16 +1,16 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "MagnifierPS.h"
-#include "DeviceVK.h"
-#include "DynamicBufferRingVK.h"
-#include "ExtDebugUtilsVK.h"
-#include "HelperVK.h"
-#include "SwapChainVK.h"
+#include "RHI/Vulkan/VKCommon/DeviceVK.h"
+#include "RHI/Vulkan/VKCommon/DynamicBufferRingVK.h"
+#include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/SwapChainVK.h"
 #include "Misc.h"
 
 using namespace LeoVultana_VK;
 
 static const char* SHADER_FILE_NAME_MAGNIFIER = "MagnifierPS.glsl";
-static const char* SHADER_ENTRY_POINT;
+static const char* SHADER_ENTRY_POINT = "main";
 using cbHandle_t = VkDescriptorBufferInfo;
 
 void MagnifierPS::OnCreate(

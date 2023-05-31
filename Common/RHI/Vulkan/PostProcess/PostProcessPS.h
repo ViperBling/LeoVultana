@@ -1,8 +1,8 @@
 #pragma once
 
-#include "RHI/Vulkan/StaticBufferPoolVK.h"
-#include "RHI/Vulkan/DynamicBufferRingVK.h"
-#include "RHI/Vulkan/ResourceViewHeapsVK.h"
+#include "RHI/Vulkan/VKCommon/StaticBufferPoolVK.h"
+#include "RHI/Vulkan/VKCommon/DynamicBufferRingVK.h"
+#include "RHI/Vulkan/VKCommon/ResourceViewHeapsVK.h"
 
 namespace LeoVultana_VK
 {

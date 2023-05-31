@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RHI/Vulkan/DeviceVK.h"
-#include "RHI/Vulkan/StaticBufferPoolVK.h"
-#include "RHI/Vulkan/ResourceViewHeapsVK.h"
-#include "RHI/Vulkan/DynamicBufferRingVK.h"
+#include "RHI/Vulkan/VKCommon/DeviceVK.h"
+#include "RHI/Vulkan/VKCommon/StaticBufferPoolVK.h"
+#include "RHI/Vulkan/VKCommon/ResourceViewHeapsVK.h"
+#include "RHI/Vulkan/VKCommon/DynamicBufferRingVK.h"
 #include "GLTFTexturesAndBuffersVK.h"
 #include "RHI/Vulkan/Widgets/WireframeBoxVK.h"
 

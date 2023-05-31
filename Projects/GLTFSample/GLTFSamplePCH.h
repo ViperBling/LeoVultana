@@ -24,23 +24,22 @@
 // Pull in math library
 #include "vectormath/vectormath.hpp"
 
-// TODO: reference additional headers your program requires here
-#include "RHI/Vulkan/ImGuiVK.h"
-#include "Utilities/ImGuiHelper.h"
-#include "RHI/Vulkan/DeviceVK.h"
-#include "RHI/Vulkan/HelperVK.h"
-#include "RHI/Vulkan/TextureVK.h"
-#include "RHI/Vulkan/GBufferVK.h"
-#include "RHI/Vulkan/FrameworkWindowsVK.h"
-#include "RHI/Vulkan/FreeSyncHDRVK.h"
-#include "RHI/Vulkan/SwapChainVK.h"
-#include "RHI/Vulkan/UploadHeapVK.h"
-#include "RHI/Vulkan/GPUTimeStampsVK.h"
-#include "RHI/Vulkan/CommandListRingVK.h"
-#include "RHI/Vulkan/StaticBufferPoolVK.h"
-#include "RHI/Vulkan/DynamicBufferRingVK.h"
-#include "RHI/Vulkan/ResourceViewHeapsVK.h"
-#include "RHI/Vulkan/ShaderCompilerHelperVK.h"
+#include "RHI/Vulkan/VKCommon/ImGuiVK.h"
+#include "RHI/Vulkan/VKCommon/DeviceVK.h"
+#include "RHI/Vulkan/VKCommon/InstanceVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/TextureVK.h"
+#include "RHI/Vulkan/VKCommon/GBufferVK.h"
+#include "RHI/Vulkan/VKCommon/FrameworkWindowsVK.h"
+#include "RHI/Vulkan/VKCommon/FreeSyncHDRVK.h"
+#include "RHI/Vulkan/VKCommon/SwapChainVK.h"
+#include "RHI/Vulkan/VKCommon/UploadHeapVK.h"
+#include "RHI/Vulkan/VKCommon/GPUTimeStampsVK.h"
+#include "RHI/Vulkan/VKCommon/CommandListRingVK.h"
+#include "RHI/Vulkan/VKCommon/StaticBufferPoolVK.h"
+#include "RHI/Vulkan/VKCommon/DynamicBufferRingVK.h"
+#include "RHI/Vulkan/VKCommon/ResourceViewHeapsVK.h"
+#include "RHI/Vulkan/VKCommon/ShaderCompilerHelperVK.h"
 #include "Utilities/ShaderCompilerCache.h"
 
 
@@ -57,5 +56,7 @@
 #include "RHI/Vulkan/Widgets/CheckerBoardFloorVK.h"
 #include "RHI/Vulkan/Widgets/WireframeBoxVK.h"
 #include "RHI/Vulkan/Widgets/WireframeSphereVK.h"
+
+#include "Utilities/ImGuiHelper.h"
 
 using namespace LeoVultana_VK;

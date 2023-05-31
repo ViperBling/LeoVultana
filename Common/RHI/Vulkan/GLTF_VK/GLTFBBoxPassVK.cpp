@@ -1,9 +1,9 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "GLTFBBoxPassVK.h"
-#include "ExtDebugUtilsVK.h"
+#include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"
 #include "GLTFHelpersVK.h"
 #include "GLTFStructures.h"
-#include "ShaderCompilerHelperVK.h"
+#include "RHI/Vulkan/VKCommon/ShaderCompilerHelperVK.h"
 
 using namespace LeoVultana_VK;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utilities/PCH.h"
+#include "PCH.h"
 #include <DXGIFormat.h>
 #include "ImgLoader.h"
 

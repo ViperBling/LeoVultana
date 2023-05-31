@@ -1,10 +1,10 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "GLTFPBRPassVK.h"
 #include "Async.h"
 #include "GLTFHelpersVK.h"
-#include "HelperVK.h"
-#include "ShaderCompilerHelperVK.h"
-#include "ExtDebugUtilsVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/ShaderCompilerHelperVK.h"
+#include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"
 #include "PostProcess/SkyDome.h"
 
 using namespace LeoVultana_VK;

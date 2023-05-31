@@ -402,11 +402,9 @@ void Log::Trace(const char* LogString)
 Log::Log()
 {
     PWSTR path = nullptr;
-    SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, nullptr, &path);
-    CreateDirectoryW((std::wstring(path) + L"\\AMD").c_str(), 0);
-    CreateDirectoryW((std::wstring(path) + L"\\AMD\\Cauldron\\").c_str(), 0);
-
-    mFileHandle = CreateFileW((std::wstring(path)+L"\\AMD\\Cauldron\\Cauldron.log").c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_FLAG_OVERLAPPED, nullptr);
+    SHGetKnownFolderPath(FOLDERID_Documents, 0, nullptr, &path);
+    CreateDirectoryW((std::wstring(path) + L"\\LeoVultana").c_str(), 0);
+    mFileHandle = CreateFileW((std::wstring(path)+L"\\LeoVultana\\LeoVultana.log").c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_FLAG_OVERLAPPED, nullptr);
     assert(mFileHandle != INVALID_HANDLE_VALUE);
 
     // Initialize the overlapped structure for asynchronous write

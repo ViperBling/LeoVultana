@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PostProcessPS.h"
-#include "RHI/Vulkan/TextureVK.h"
+#include "RHI/Vulkan/VKCommon/TextureVK.h"
 
 namespace LeoVultana_VK
 {

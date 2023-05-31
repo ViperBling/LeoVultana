@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GLTFTexturesAndBuffersVK.h"
-#include "RHI/Vulkan/GBufferVK.h"
+#include "RHI/Vulkan/VKCommon/GBufferVK.h"
 #include "GLTF/GLTFPBRMaterial.h"
 #include "RHI/Vulkan/PostProcess/SkyDome.h"
 

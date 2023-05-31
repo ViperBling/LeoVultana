@@ -1,8 +1,8 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "GLTFTexturesAndBuffersVK.h"
 #include "Misc.h"
 #include "GLTFHelpersVK.h"
-#include "UploadHeapVK.h"
+#include "RHI/Vulkan/VKCommon/UploadHeapVK.h"
 #include "ThreadPool.h"
 #include "GLTFPBRMaterial.h"
 

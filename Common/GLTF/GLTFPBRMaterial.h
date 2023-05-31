@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utilities/PCH.h"
+#include "PCH.h"
 #include "GLTFHelpers.h"
 #include "Utilities/ShaderCompiler.h"
 

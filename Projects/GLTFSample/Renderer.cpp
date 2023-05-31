@@ -38,7 +38,7 @@ void Renderer::OnCreate(Device *pDevice, SwapChain *pSwapChain, float FontSize)
     // initialize the GPU time stamps module
     m_GPUTimer.OnCreate(pDevice, backBufferCount);
 
-    // Quick helper to upload resources, it has it's own commandList and uses suballocation.
+    // Quick helper to upload resources, it has its own commandList and uses suballocation.
     const uint32_t uploadHeapMemSize = 1000 * 1024 * 1024;
     m_UploadHeap.OnCreate(pDevice, uploadHeapMemSize);    // initialize an upload heap (uses suballocation for faster results)
 
@@ -67,7 +67,7 @@ void Renderer::OnCreate(Device *pDevice, SwapChain *pSwapChain, float FontSize)
     {
         VkAttachmentDescription depthAttachments;
         AttachClearBeforeUse(VK_FORMAT_D32_SFLOAT, VK_SAMPLE_COUNT_1_BIT, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, &depthAttachments);
-        m_Render_pass_shadow = CreateRenderPassOptimal(m_pDevice->GetDevice(), 0, NULL, &depthAttachments);
+        m_Render_pass_shadow = CreateRenderPassOptimal(m_pDevice->GetDevice(), 0, nullptr, &depthAttachments);
     }
 
     m_SkyDome.OnCreate(
@@ -76,8 +76,8 @@ void Renderer::OnCreate(Device *pDevice, SwapChain *pSwapChain, float FontSize)
         &m_UploadHeap, VK_FORMAT_R16G16B16A16_SFLOAT,
         &m_ResourceViewHeaps, &m_ConstantBufferRing,
         &m_VidMemBufferPool,
-        "..\\media\\cauldron-media\\envmaps\\papermill\\diffuse.dds",
-        "..\\media\\cauldron-media\\envmaps\\papermill\\specular.dds",
+        "..\\Assets\\Textures\\EnvMaps\\diffuse.dds",
+        "..\\Assets\\Textures\\EnvMaps\\specular.dds",
         VK_SAMPLE_COUNT_1_BIT);
     m_Wireframe.OnCreate(pDevice, m_RenderPassJustDepthAndHdr.GetRenderPass(), &m_ResourceViewHeaps, &m_ConstantBufferRing, &m_VidMemBufferPool, VK_SAMPLE_COUNT_1_BIT);
     m_WireframeBox.OnCreate(pDevice, &m_ResourceViewHeaps, &m_ConstantBufferRing, &m_VidMemBufferPool);
@@ -204,10 +204,10 @@ int Renderer::LoadScene(GLTFCommon *pGLTFCommon, int Stage)
     // show loading progress
     //
     ImGui::OpenPopup("Loading");
-    if (ImGui::BeginPopupModal("Loading", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal("Loading", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         float progress = (float)Stage / 12.0f;
-        ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), NULL);
+        ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), nullptr);
         ImGui::EndPopup();
     }
 
@@ -330,28 +330,28 @@ void Renderer::UnloadScene()
     {
         m_GLTFPBR->OnDestroy();
         delete m_GLTFPBR;
-        m_GLTFPBR = NULL;
+        m_GLTFPBR = nullptr;
     }
 
     if (m_GLTFDepth)
     {
         m_GLTFDepth->OnDestroy();
         delete m_GLTFDepth;
-        m_GLTFDepth = NULL;
+        m_GLTFDepth = nullptr;
     }
 
     if (m_GLTFBBox)
     {
         m_GLTFBBox->OnDestroy();
         delete m_GLTFBBox;
-        m_GLTFBBox = NULL;
+        m_GLTFBBox = nullptr;
     }
 
     if (m_pGLTFTexturesAndBuffers)
     {
         m_pGLTFTexturesAndBuffers->OnDestroy();
         delete m_pGLTFTexturesAndBuffers;
-        m_pGLTFTexturesAndBuffers = NULL;
+        m_pGLTFTexturesAndBuffers = nullptr;
     }
 
     assert(m_shadowMapPool.size() == m_ShadowSRVPool.size());
@@ -407,14 +407,14 @@ void Renderer::AllocateShadowMaps(GLTFCommon* pGLTFCommon)
                 VkImageView attachmentViews[1] = { CurrentShadow->ShadowDSV };
                 VkFramebufferCreateInfo fb_info = {};
                 fb_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-                fb_info.pNext = NULL;
+                fb_info.pNext = nullptr;
                 fb_info.renderPass = m_Render_pass_shadow;
                 fb_info.attachmentCount = 1;
                 fb_info.pAttachments = attachmentViews;
                 fb_info.width = CurrentShadow->ShadowResolution;
                 fb_info.height = CurrentShadow->ShadowResolution;
                 fb_info.layers = 1;
-                VkResult res = vkCreateFramebuffer(m_pDevice->GetDevice(), &fb_info, NULL, &CurrentShadow->ShadowFrameBuffer);
+                VkResult res = vkCreateFramebuffer(m_pDevice->GetDevice(), &fb_info, nullptr, &CurrentShadow->ShadowFrameBuffer);
                 assert(res == VK_SUCCESS);
             }
 
@@ -441,9 +441,9 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     {
         VkCommandBufferBeginInfo cmd_buf_info;
         cmd_buf_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-        cmd_buf_info.pNext = NULL;
+        cmd_buf_info.pNext = nullptr;
         cmd_buf_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-        cmd_buf_info.pInheritanceInfo = NULL;
+        cmd_buf_info.pInheritanceInfo = nullptr;
         VkResult res = vkBeginCommandBuffer(cmdBuf1, &cmd_buf_info);
         assert(res == VK_SUCCESS);
     }
@@ -451,7 +451,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     m_GPUTimer.OnBeginFrame(cmdBuf1, &m_TimeStamps);
 
     // Sets the perFrame data
-    PerFrame *pPerFrame = NULL;
+    PerFrame *pPerFrame = nullptr;
     if (m_pGLTFTexturesAndBuffers)
     {
         // fill as much as possible using the GLTF (camera, lights, ...)
@@ -473,7 +473,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     }
 
     // Render all shadow maps
-    if (m_GLTFDepth && pPerFrame != NULL)
+    if (m_GLTFDepth && pPerFrame != nullptr)
     {
         SetPerfMarkerBegin(cmdBuf1, "ShadowPass");
 
@@ -483,7 +483,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
         VkRenderPassBeginInfo rp_begin;
         rp_begin.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-        rp_begin.pNext = NULL;
+        rp_begin.pNext = nullptr;
         rp_begin.renderPass = m_Render_pass_shadow;
         rp_begin.renderArea.offset.x = 0;
         rp_begin.renderArea.offset.y = 0;
@@ -522,7 +522,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
     VkRect2D renderArea = { 0, 0, m_Width, m_Height };
 
-    if (pPerFrame != NULL && m_GLTFPBR)
+    if (pPerFrame != nullptr && m_GLTFPBR)
     {
         const bool bWireframe = pState->WireframeMode != UIState::WireframeMode::WIREFRAME_MODE_OFF;
 
@@ -580,7 +580,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
             }
 
             // draw light's frustums
-            if (pState->bDrawLightFrustum && pPerFrame != NULL)
+            if (pState->bDrawLightFrustum && pPerFrame != nullptr)
             {
                 SetPerfMarkerBegin(cmdBuf1, "light frustums");
 
@@ -612,7 +612,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
     VkImageMemoryBarrier barrier[1] = {};
     barrier[0].sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-    barrier[0].pNext = NULL;
+    barrier[0].pNext = nullptr;
     barrier[0].srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
     barrier[0].dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
     barrier[0].oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -625,7 +625,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     barrier[0].subresourceRange.baseArrayLayer = 0;
     barrier[0].subresourceRange.layerCount = 1;
     barrier[0].image = m_GBuffer.mHDR.Resource();
-    vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, NULL, 0, NULL, 1, barrier);
+    vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT | VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, barrier);
 
     SetPerfMarkerEnd(cmdBuf1);
 
@@ -636,7 +636,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     {
         VkImageMemoryBarrier barrier = {};
         barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-        barrier.pNext = NULL;
+        barrier.pNext = nullptr;
         barrier.srcAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT;
         barrier.dstAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT;
         barrier.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -652,13 +652,13 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         if (m_bMagResourceReInit)
         {
             barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, NULL, 0, NULL, 1, &barrier);
+            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
             m_bMagResourceReInit = false;
         }
         else
         {
             barrier.oldLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, NULL, 0, NULL, 1, &barrier);
+            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
         }
 
         // Note: assumes the input texture (specified in OnCreateWindowSizeDependentResources()) is in read state
@@ -679,7 +679,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         {
             VkImageMemoryBarrier barrier = {};
             barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-            barrier.pNext = NULL;
+            barrier.pNext = nullptr;
             barrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
             barrier.dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
             barrier.oldLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
@@ -730,7 +730,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
             {
                 VkImageMemoryBarrier barrier = {};
                 barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-                barrier.pNext = NULL;
+                barrier.pNext = nullptr;
                 barrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
                 barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
                 barrier.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -743,7 +743,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
                 barrier.subresourceRange.baseArrayLayer = 0;
                 barrier.subresourceRange.layerCount = 1;
                 barrier.image = ImgCurrentInput;
-                vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, NULL, 0, NULL, 1, &barrier);
+                vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
             }
 
             m_GPUTimer.GetTimeStamp(cmdBuf1, "ImGUI Rendering");
@@ -757,14 +757,14 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
         VkSubmitInfo submit_info;
         submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-        submit_info.pNext = NULL;
+        submit_info.pNext = nullptr;
         submit_info.waitSemaphoreCount = 0;
-        submit_info.pWaitSemaphores = NULL;
-        submit_info.pWaitDstStageMask = NULL;
+        submit_info.pWaitSemaphores = nullptr;
+        submit_info.pWaitDstStageMask = nullptr;
         submit_info.commandBufferCount = 1;
         submit_info.pCommandBuffers = &cmdBuf1;
         submit_info.signalSemaphoreCount = 0;
-        submit_info.pSignalSemaphores = NULL;
+        submit_info.pSignalSemaphores = nullptr;
         res = vkQueueSubmit(m_pDevice->GetGraphicsQueue(), 1, &submit_info, VK_NULL_HANDLE);
         assert(res == VK_SUCCESS);
     }
@@ -783,9 +783,9 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     {
         VkCommandBufferBeginInfo cmd_buf_info;
         cmd_buf_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-        cmd_buf_info.pNext = NULL;
+        cmd_buf_info.pNext = nullptr;
         cmd_buf_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-        cmd_buf_info.pInheritanceInfo = NULL;
+        cmd_buf_info.pInheritanceInfo = nullptr;
         VkResult res = vkBeginCommandBuffer(cmdBuf2, &cmd_buf_info);
         assert(res == VK_SUCCESS);
     }
@@ -796,7 +796,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     {
         VkRenderPassBeginInfo rp_begin = {};
         rp_begin.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-        rp_begin.pNext = NULL;
+        rp_begin.pNext = nullptr;
         rp_begin.renderPass = pSwapChain->GetRenderPass();
         rp_begin.framebuffer = pSwapChain->GetFrameBuffer(imageIndex);
         rp_begin.renderArea.offset.x = 0;
@@ -804,7 +804,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         rp_begin.renderArea.extent.width = m_Width;
         rp_begin.renderArea.extent.height = m_Height;
         rp_begin.clearValueCount = 0;
-        rp_begin.pClearValues = NULL;
+        rp_begin.pClearValues = nullptr;
         vkCmdBeginRenderPass(cmdBuf2, &rp_begin, VK_SUBPASS_CONTENTS_INLINE);
     }
 
@@ -837,7 +837,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         VkPipelineStageFlags submitWaitStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
         VkSubmitInfo submit_info2;
         submit_info2.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-        submit_info2.pNext = NULL;
+        submit_info2.pNext = nullptr;
         submit_info2.waitSemaphoreCount = 1;
         submit_info2.pWaitSemaphores = &ImageAvailableSemaphore;
         submit_info2.pWaitDstStageMask = &submitWaitStage;

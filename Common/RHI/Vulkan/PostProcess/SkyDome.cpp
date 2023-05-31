@@ -1,9 +1,9 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "SkyDome.h"
-#include "HelperVK.h"
-#include "ExtDebugUtilsVK.h"
-#include "HelperVK.h"
-#include "TextureVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/TextureVK.h"
 
 using namespace LeoVultana_VK;
 

@@ -1,3 +1,21 @@
+include(../CMake/Common.cmake)
+
+#set(Base_SRC
+#    Utilities/Sequence.h Utilities/Sequence.cpp
+#    Utilities/Benchmark.h Utilities/Benchmark.h
+#    Utilities/ImGuiHelper.h Utilities/ImGuiHelper.cpp)
+#
+#set(ShaderCompiler_SRC
+#    Utilities/ShaderCompiler.h Utilities/ShaderCompiler.cpp
+#    Utilities/ShaderCompilerCache.h Utilities/ShaderCompilerCache.cpp
+#    Utilities/DXCHelper.h Utilities/DXCHelper.cpp)
+#
+#set(GLTF_SRC
+#    GLTF/GLTFStructures.h
+#    GLTF/GLTFCommon.h GLTF/GLTFCommon.cpp
+#    GLTF/GLTFPBRMaterial.h GLTF/GLTFPBRMaterial.cpp
+#    GLTF/GLTFHelpers.h GLTF/GLTFHelpers.cpp)
+
 file(GLOB_RECURSE Common_SRC
     "Function/*.cpp"
     "GLTF/*.cpp"
@@ -15,7 +33,6 @@ include_directories(RHI)
 include_directories(Utilities)
 
 add_subdirectory(RHI/Vulkan)
-#add_subdirectory(RHI/D3D12)
 
 add_library(CommonLib STATIC ${Common_SRC} ${Common_HEAD})
 

@@ -1,9 +1,9 @@
-#include "PCHVK.h"
+#include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "WireframeVK.h"
-#include "DeviceVK.h"
-#include "HelperVK.h"
-#include "ShaderCompilerHelperVK.h"
-#include "ExtDebugUtilsVK.h"
+#include "RHI/Vulkan/VKCommon/DeviceVK.h"
+#include "RHI/Vulkan/VKCommon/HelperVK.h"
+#include "RHI/Vulkan/VKCommon/ShaderCompilerHelperVK.h"
+#include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"
 
 using namespace LeoVultana_VK;
 

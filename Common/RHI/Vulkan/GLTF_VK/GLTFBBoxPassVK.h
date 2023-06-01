@@ -9,7 +9,7 @@
 
 namespace LeoVultana_VK
 {
-    class GLTFBoxPass
+    class GLTFBBoxPass
     {
     public:
         void OnCreate(

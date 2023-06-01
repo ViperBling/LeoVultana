@@ -7,7 +7,7 @@
 
 using namespace LeoVultana_VK;
 
-void GLTFBoxPass::OnCreate(
+void GLTFBBoxPass::OnCreate(
     Device *pDevice,
     VkRenderPass renderPass,
     ResourceViewHeaps *pHeaps,
@@ -22,13 +22,12 @@ void GLTFBoxPass::OnCreate(
     mWireframeBox.OnCreate(pDevice, pHeaps, pDynamicBufferRing, pStaticBufferPool);
 }
 
-void GLTFBoxPass::OnDestroy()
+void GLTFBBoxPass::OnDestroy()
 {
     mWireframeBox.OnDestroy();
 }
 
-void
-GLTFBoxPass::Draw(
+void GLTFBBoxPass::Draw(
     VkCommandBuffer cmdBuffer,
     const math::Matrix4 &cameraViewProjMatrix,
     const math::Vector4 &color)

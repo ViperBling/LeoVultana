@@ -117,8 +117,6 @@ namespace LeoVultana_VK
         std::vector<PBRMesh>     mMeshes;
         std::vector<PBRMaterial> mMaterialDatas;
 
-        GLTFPBRPass::PerFrame mCBPerFrame;
-
         PBRMaterial mDefaultMaterial;
 
         Device*             m_pDevice;

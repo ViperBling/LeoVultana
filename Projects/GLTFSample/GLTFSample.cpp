@@ -304,13 +304,7 @@ void GLTFSample::OnUpdate()
 
     // Update Camera
     UpdateCamera(m_camera, io);
-    if (m_UIState.bUseTAA)
-    {
-        static uint32_t Seed;
-        m_camera.SetProjectionJitter(mWidth, mHeight, Seed);
-    }
-    else
-        m_camera.SetProjectionJitter(0.f, 0.f);
+    m_camera.SetProjectionJitter(0.f, 0.f);
 
     // Keyboard & Mouse
     HandleInput(io);

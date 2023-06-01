@@ -365,10 +365,10 @@ void UIState::Initialize()
 
     // init GUI state
     this->SelectedTonemapperIndex = 0;
-    this->bUseTAA = true;
+    this->bUseTAA = false;
     this->bUseMagnifier = false;
     this->bLockMagnifierPosition = this->bLockMagnifierPositionHistory = false;
-    this->SelectedSkydomeTypeIndex = 0;
+    this->SelectedSkydomeTypeIndex = 1;
     this->Exposure = 1.0f;
     this->IBLFactor = 2.0f;
     this->EmissiveFactor = 1.0f;

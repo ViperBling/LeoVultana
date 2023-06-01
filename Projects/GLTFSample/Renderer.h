@@ -74,7 +74,7 @@ private:
 
     //gltf passes
     GLTFPBRPass                    *m_GLTFPBR;
-    GLTFBoxPass                   *m_GLTFBBox;
+    GLTFBoxPass                    *m_GLTFBBox;
     GLTFDepthPass                  *m_GLTFDepth;
     GLTFTexturesAndBuffers         *m_pGLTFTexturesAndBuffers;
 

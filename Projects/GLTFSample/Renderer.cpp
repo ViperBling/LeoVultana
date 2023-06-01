@@ -101,10 +101,10 @@ void Renderer::OnDestroy()
     m_AsyncPool.Flush();
 
     m_ImGUI.OnDestroy();
-    m_MagnifierPS.OnDestroy();
+//    m_MagnifierPS.OnDestroy();
     m_WireframeBox.OnDestroy();
     m_Wireframe.OnDestroy();
-    m_SkyDome.OnDestroy();
+//    m_SkyDome.OnDestroy();
 
     m_RenderPassFullGBufferWithClear.OnDestroy();
     m_RenderPassJustDepthAndHdr.OnDestroy();
@@ -171,7 +171,7 @@ void Renderer::OnCreateWindowSizeDependentResources(SwapChain *pSwapChain, uint3
 //--------------------------------------------------------------------------------------
 void Renderer::OnDestroyWindowSizeDependentResources()
 {
-    m_MagnifierPS.OnDestroyWindowSizeDependentResources();
+//    m_MagnifierPS.OnDestroyWindowSizeDependentResources();
 
     m_RenderPassFullGBufferWithClear.OnDestroyWindowSizeDependentResources();
     m_RenderPassJustDepthAndHdr.OnDestroyWindowSizeDependentResources();
@@ -181,7 +181,7 @@ void Renderer::OnDestroyWindowSizeDependentResources()
 
 void Renderer::OnUpdateDisplayDependentResources(SwapChain *pSwapChain, bool bUseMagnifier)
 {
-    m_ImGUI.UpdatePipeline((pSwapChain->GetDisplayMode() == DISPLAYMODE_SDR) ? pSwapChain->GetRenderPass() : bUseMagnifier ? m_MagnifierPS.GetPassRenderPass() : m_RenderPassJustDepthAndHdr.GetRenderPass());
+    m_ImGUI.UpdatePipeline((pSwapChain->GetDisplayMode() == DISPLAYMODE_SDR) ? pSwapChain->GetRenderPass() : m_RenderPassJustDepthAndHdr.GetRenderPass());
 }
 
 //--------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ int Renderer::LoadScene(GLTFCommon *pGLTFCommon, int Stage)
             &m_ConstantBufferRing,
             &m_VidMemBufferPool,
             m_pGLTFTexturesAndBuffers,
-            &m_SkyDome,
+            nullptr,
             false, // use SSAO mask
             m_ShadowSRVPool,
             &m_RenderPassFullGBufferWithClear,
@@ -531,26 +531,10 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         // Render opaque
         {
             m_RenderPassFullGBufferWithClear.BeginPass(cmdBuf1, renderArea);
-
             m_GLTFPBR->DrawBatchList(cmdBuf1, &opaque, bWireframe);
             m_GPUTimer.GetTimeStamp(cmdBuf1, "PBR Opaque");
 
             m_RenderPassFullGBufferWithClear.EndPass(cmdBuf1);
-        }
-
-        // Render skydome
-        {
-            m_RenderPassJustDepthAndHdr.BeginPass(cmdBuf1, renderArea);
-
-            if (pState->SelectedSkydomeTypeIndex == 1)
-            {
-                math::Matrix4 clipToView = math::inverse(pPerFrame->mCameraCurrViewProj);
-                m_SkyDome.Draw(cmdBuf1, clipToView);
-
-                m_GPUTimer.GetTimeStamp(cmdBuf1, "Skydome cube");
-            }
-
-            m_RenderPassJustDepthAndHdr.EndPass(cmdBuf1);
         }
 
         // draw transparent geometry
@@ -631,123 +615,10 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     // Post proc---------------------------------------------------------------------------
 
     // Magnifier Pass: m_HDR as input, pass' own output
-    if (pState->bUseMagnifier)
-    {
-        VkImageMemoryBarrier barrier = {};
-        barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-        barrier.pNext = nullptr;
-        barrier.srcAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT;
-        barrier.dstAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT;
-        barrier.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        barrier.subresourceRange.baseMipLevel = 0;
-        barrier.subresourceRange.levelCount = 1;
-        barrier.subresourceRange.baseArrayLayer = 0;
-        barrier.subresourceRange.layerCount = 1;
-        barrier.image = m_MagnifierPS.GetPassOutputResource();
-
-        if (m_bMagResourceReInit)
-        {
-            barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
-            m_bMagResourceReInit = false;
-        }
-        else
-        {
-            barrier.oldLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
-        }
-
-        // Note: assumes the input texture (specified in OnCreateWindowSizeDependentResources()) is in read state
-        m_MagnifierPS.Draw(cmdBuf1, pState->MagnifierParams);
-        m_GPUTimer.GetTimeStamp(cmdBuf1, "Magnifier");
-    }
-
 
     // Start tracking input/output resources at this point to handle HDR and SDR render paths
-    VkImage      ImgCurrentInput  = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputResource() : m_GBuffer.mHDR.Resource();
-    VkImageView  SRVCurrentInput  = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputSRV()      : m_GBuffer.mHDRSRV;
-
-    // If using FreeSync HDR, we need to do these in order: Tonemapping -> GUI -> Color Conversion
-    const bool bHDR = pSwapChain->GetDisplayMode() != DISPLAYMODE_SDR;
-    if (bHDR)
-    {
-        // In place Tonemapping ------------------------------------------------------------------------
-        {
-            VkImageMemoryBarrier barrier = {};
-            barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-            barrier.pNext = nullptr;
-            barrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
-            barrier.dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-            barrier.oldLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            barrier.newLayout = VK_IMAGE_LAYOUT_GENERAL;
-            barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            barrier.subresourceRange.baseMipLevel = 0;
-            barrier.subresourceRange.levelCount = 1;
-            barrier.subresourceRange.baseArrayLayer = 0;
-            barrier.subresourceRange.layerCount = 1;
-            barrier.image = ImgCurrentInput;
-
-            barrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-            barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-            barrier.oldLayout = VK_IMAGE_LAYOUT_GENERAL;
-            barrier.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-            barrier.image = ImgCurrentInput;
-        }
-
-        // Render HUD  ------------------------------------------------------------------------
-        {
-
-            if (pState->bUseMagnifier)
-            {
-                m_MagnifierPS.BeginPass(cmdBuf1, renderArea);
-            }
-            else
-            {
-                m_RenderPassJustDepthAndHdr.BeginPass(cmdBuf1, renderArea);
-            }
-
-            vkCmdSetScissor(cmdBuf1, 0, 1, &m_RectScissor);
-            vkCmdSetViewport(cmdBuf1, 0, 1, &m_Viewport);
-
-            m_ImGUI.Draw(cmdBuf1);
-
-            if (pState->bUseMagnifier)
-            {
-                m_MagnifierPS.EndPass(cmdBuf1);
-            }
-            else
-            {
-                m_RenderPassJustDepthAndHdr.EndPass(cmdBuf1);
-            }
-
-            if (bHDR && !pState->bUseMagnifier)
-            {
-                VkImageMemoryBarrier barrier = {};
-                barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-                barrier.pNext = nullptr;
-                barrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-                barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-                barrier.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-                barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-                barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-                barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-                barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-                barrier.subresourceRange.baseMipLevel = 0;
-                barrier.subresourceRange.levelCount = 1;
-                barrier.subresourceRange.baseArrayLayer = 0;
-                barrier.subresourceRange.layerCount = 1;
-                barrier.image = ImgCurrentInput;
-                vkCmdPipelineBarrier(cmdBuf1, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
-            }
-
-            m_GPUTimer.GetTimeStamp(cmdBuf1, "ImGUI Rendering");
-        }
-    }
+    VkImage      ImgCurrentInput  =  m_GBuffer.mHDR.Resource();
+    VkImageView  SRVCurrentInput  =  m_GBuffer.mHDRSRV;
 
     // submit command buffer
     {
@@ -772,8 +643,8 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
     int imageIndex = pSwapChain->WaitForSwapChain();
 
     // Keep tracking input/output resource views
-    ImgCurrentInput = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputResource() : m_GBuffer.mHDR.Resource(); // these haven't changed, re-assign as sanity check
-    SRVCurrentInput = pState->bUseMagnifier ? m_MagnifierPS.GetPassOutputSRV()      : m_GBuffer.mHDRSRV;         // these haven't changed, re-assign as sanity check
+    ImgCurrentInput =  m_GBuffer.mHDR.Resource(); // these haven't changed, re-assign as sanity check
+    SRVCurrentInput =  m_GBuffer.mHDRSRV;         // these haven't changed, re-assign as sanity check
 
     m_CommandListRing.OnBeginFrame();
 

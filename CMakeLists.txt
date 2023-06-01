@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(LeoVultana)
 
-add_compile_options(/MP)
+#add_compile_options(/MP)
 
 # Check MSVC toolset version, Visual Studio 2019 required
 if(MSVC_TOOLSET_VERSION VERSION_LESS 142)
@@ -16,7 +16,7 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_HOME_DIRECTORY}/Binaries )
 endforeach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
 
-add_compile_options(/MP)
+#add_compile_options(/MP)
 
 # reference libs used by both backends
 include_directories(Externals)

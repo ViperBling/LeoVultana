@@ -1,6 +1,6 @@
 # enables multithreading compilation
 
-add_compile_options(/MP)
+#add_compile_options(/MP)
 
 #
 # Copies a set of files to a directory (only if they already don't exist or are different)

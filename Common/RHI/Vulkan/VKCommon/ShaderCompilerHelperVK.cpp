@@ -66,7 +66,7 @@ namespace LeoVultana_VK
         if (sourceType == SST_GLSL)
         {
             commandLine = format(
-                "glslc --target-env=vulkan1.1 -fshader-stage=%s -fentry-point=%s %s \"%s\" -o \"%s\" -I %s %s",
+                "glslc --target-env=vulkan1.3 -fshader-stage=%s -fentry-point=%s %s \"%s\" -o \"%s\" -I %s %s",
                 stage, pShaderEntryPoint, shaderCompilerParams,
                 filenameGlsl.c_str(), filenameSpv.c_str(),
                 GetShaderCompilerLibDir().c_str(), defines.c_str());
@@ -187,10 +187,8 @@ namespace LeoVultana_VK
             std::string filenameSpv = format("%s\\%p.spv", GetShaderCompilerCacheDir().c_str(), hash);
             if (ReadFile(filenameSpv.c_str(), &SpvData, &SpvSize, true) == false)
 #endif
-            {
-                std::string shader = GenerateSource(sourceType, shaderType, pShader, shaderCompilerParams, pDefines);
-                VKCompileToSPIRV(hash, sourceType, shaderType, shader, pShaderEntryPoint, shaderCompilerParams, pDefines, &SpvData, &SpvSize);
-            }
+            std::string shader = GenerateSource(sourceType, shaderType, pShader, shaderCompilerParams, pDefines);
+            VKCompileToSPIRV(hash, sourceType, shaderType, shader, pShaderEntryPoint, shaderCompilerParams, pDefines, &SpvData, &SpvSize);
 
             assert(SpvSize != 0);
             CreateModule(device, SpvData, SpvSize, &pShaderStageCI->module);

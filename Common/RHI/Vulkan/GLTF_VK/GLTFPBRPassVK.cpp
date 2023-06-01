@@ -73,7 +73,7 @@ void GLTFPBRPass::OnCreate(
     m_pRenderPass->GetCompilerDefines(rtDefines);
 
     // Load BRDF look up table for the PBR shader
-    mBRDFLutTexture.InitFromFile(pDevice, pUploadHeap, "BrdfLut.dds", false); // LUT images are stored as linear
+    mBRDFLutTexture.InitFromFile(pDevice, pUploadHeap, "..\\Assets\\Textures\\BrdfLut.dds", false); // LUT images are stored as linear
     mBRDFLutTexture.CreateSRV(&mBRDFLutView);
 
     // Create Samplers
@@ -400,16 +400,16 @@ void GLTFPBRPass::CreateDescriptorTableForMaterialTextures(
         // 2) 3 SRVs for the IBL probe
         if (pSkyDome)
         {
-            tfMat->mPBRMaterialParameters.mDefines["ID_BRDFTexture"] = std::to_string(cnt);
+            tfMat->mPBRMaterialParameters.mDefines["ID_brdfTexture"] = std::to_string(cnt);
             SetDescriptorSet(
                 m_pDevice->GetDevice(),
                 cnt, mBRDFLutView,
                 &mBRDFLutSampler, tfMat->mTextureDescSet);
             cnt++;
-            tfMat->mPBRMaterialParameters.mDefines["ID_DiffuseCube"] = std::to_string(cnt);
+            tfMat->mPBRMaterialParameters.mDefines["ID_diffuseCube"] = std::to_string(cnt);
             pSkyDome->SetDescriptorDiffuse(cnt, tfMat->mTextureDescSet);
             cnt++;
-            tfMat->mPBRMaterialParameters.mDefines["ID_SpecularCube"] = std::to_string(cnt);
+            tfMat->mPBRMaterialParameters.mDefines["ID_specularCube"] = std::to_string(cnt);
             pSkyDome->SetDescriptorSpecular(cnt, tfMat->mTextureDescSet);
             cnt++;
 
@@ -424,7 +424,7 @@ void GLTFPBRPass::CreateDescriptorTableForMaterialTextures(
         // 4) Up to MaxShadowInstances SRVs for the shadowMaps
         if (!ShadowMapViewPool.empty())
         {
-            tfMat->mPBRMaterialParameters.mDefines["ID_ShadowMap"] = std::to_string(cnt);
+            tfMat->mPBRMaterialParameters.mDefines["ID_shadowMap"] = std::to_string(cnt);
             SetDescriptorSet(
                 m_pDevice->GetDevice(),
                 cnt,
@@ -433,7 +433,6 @@ void GLTFPBRPass::CreateDescriptorTableForMaterialTextures(
                 &mSamplerShadow, tfMat->mTextureDescSet);
             cnt++;
         }
-
     }
 }
 

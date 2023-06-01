@@ -295,7 +295,6 @@ int Renderer::LoadScene(GLTFCommon *pGLTFCommon, int Stage)
 
         // we are borrowing the upload heap command list for uploading to the GPU the IBs and VBs
         m_VidMemBufferPool.UploadData(m_UploadHeap.GetCommandList());
-
     }
     else if (Stage == 10)
     {

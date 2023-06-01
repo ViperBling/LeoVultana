@@ -174,12 +174,65 @@ void GLTFDepthPass::OnDestroy()
 
 GLTFDepthPass::PerFrame *GLTFDepthPass::SetPerFrameConstants()
 {
-    return nullptr;
+    GLTFDepthPass::PerFrame* cbPerFrame;
+    m_pDynamicBufferRing->AllocateConstantBuffer(sizeof(GLTFDepthPass::PerFrame), (void**)&cbPerFrame, &mPerFrameDesc);
+    return cbPerFrame;
 }
 
 void GLTFDepthPass::Draw(VkCommandBuffer cmdBuffer)
 {
+    SetPerfMarkerEnd(cmdBuffer);
 
+    std::vector<gltfNode>* pNodes = &m_pGLTFTexturesAndBuffers->m_pGLTFCommon->mNodes;
+    Matrix2* pNodesMatrices = m_pGLTFTexturesAndBuffers->m_pGLTFCommon->mWorldSpaceMats.data();
+
+    for (uint32_t i = 0; i < pNodes->size(); i++)
+    {
+        gltfNode* pNode = &pNodes->at(i);
+        if ((pNodes == nullptr) || (pNode->meshIndex < 0)) continue;
+
+        VkDescriptorBufferInfo* pPerSkeleton = m_pGLTFTexturesAndBuffers->GetSkinningMatricesBuffer(pNode->skinIndex);
+
+        DepthMesh* pMesh = &mMeshes[pNode->meshIndex];
+        for (int p = 0; p < pMesh->mPrimitives.size(); p++)
+        {
+            DepthPrimitives* pPrimitive = &pMesh->mPrimitives[p];
+            if (pPrimitive->mPipeline == VK_NULL_HANDLE) continue;
+
+            PerObject* cbPerObject;
+            VkDescriptorBufferInfo perObjectDesc;
+            m_pDynamicBufferRing->AllocateConstantBuffer(sizeof(PerObject), (void**)&cbPerObject, &perObjectDesc);
+            cbPerObject->mWorld = pNodesMatrices[i].GetCurrent();
+
+            // Bind indices and vertices
+            Geometry* pGeometry = &pPrimitive->mGeometry;
+            for (uint32_t t = 0; t < pGeometry->mVBV.size(); t++)
+            {
+                vkCmdBindVertexBuffers(cmdBuffer, t, 1, &pGeometry->mVBV[t].buffer, &pGeometry->mVBV[t].offset);
+            }
+            vkCmdBindIndexBuffer(cmdBuffer, pGeometry->mIBV.buffer, pGeometry->mIBV.offset, pGeometry->mIndexType);
+
+            // Bind DescriptorSet
+            VkDescriptorSet descSets[2] = { pPrimitive->mDescSet, pPrimitive->m_pMaterial->mDescSet};
+            uint32_t descSetCount = 1 + (pPrimitive->m_pMaterial->mTextureCount > 0 ? 1 : 0);
+
+            uint32_t uniformOffset[3] = {(uint32_t)mPerFrameDesc.offset, (uint32_t)perObjectDesc.offset, (pPerSkeleton) ? (uint32_t)pPerSkeleton->offset : 0};
+            uint32_t uniformOffsetCount = (pPerSkeleton) ? 3 : 2;
+
+            vkCmdBindDescriptorSets(
+                cmdBuffer,
+                VK_PIPELINE_BIND_POINT_GRAPHICS,
+                pPrimitive->mPipelineLayout,
+                0,
+                descSetCount,
+                descSets,
+                uniformOffsetCount, uniformOffset);
+
+            vkCmdBindPipeline(cmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pPrimitive->mPipeline);
+            vkCmdDrawIndexed(cmdBuffer, pGeometry->mNumIndices, 1, 0, 0, 0);
+        }
+    }
+    SetPerfMarkerEnd(cmdBuffer);
 }
 
 void GLTFDepthPass::CreateDescriptors(

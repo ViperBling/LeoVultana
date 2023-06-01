@@ -97,7 +97,7 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
 void GLTFSample::OnCreate()
 {
     // Init the shader compiler
-    InitDirectXCompiler();
+//    InitDirectXCompiler();
     CreateShaderCache();
 
     // Create a instance of the renderer and initialize it, we need to do that for each GPU

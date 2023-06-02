@@ -376,8 +376,10 @@ void FrameworkWindows::EndFrame()
 
 void FrameworkWindows::ToggleFullScreen()
 {
-    if (mFullScreenMode == PRESENTATIONMODE_WINDOWED) mFullScreenMode = PRESENTATIONMODE_BORDERLESS_FULLSCREEN;
-    else mFullScreenMode = PRESENTATIONMODE_WINDOWED;
+    if (mFullScreenMode == PRESENTATIONMODE_WINDOWED)
+        mFullScreenMode = PRESENTATIONMODE_BORDERLESS_FULLSCREEN;
+    else
+        mFullScreenMode = PRESENTATIONMODE_WINDOWED;
 
     HandleFullScreen();
     mPreviousFullScreenMode = mFullScreenMode;
@@ -396,7 +398,7 @@ void FrameworkWindows::HandleFullScreen()
     {
         mCurrentDisplayModeNamesIndex = DISPLAYMODE_SDR;
     }
-        // when hdr10 modes, fall back to SDR unless windowMode hdr is enabled
+    // when hdr10 modes, fall back to SDR unless windowMode hdr is enabled
     else if (mFullScreenMode == PRESENTATIONMODE_WINDOWED && !CheckIfWindowModeHDROn() &&
              mDisplayModesAvailable[mCurrentDisplayModeNamesIndex] != DISPLAYMODE_SDR)
     {
@@ -438,8 +440,6 @@ void FrameworkWindows::HandleFullScreen()
             mSwapChain.SetFullScreen(true);
             break;
         }
-        default:
-            break;
     }
     RECT clientRect{};
     GetClientRect(mWindowHWND, &clientRect);

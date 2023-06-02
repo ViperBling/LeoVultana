@@ -104,7 +104,7 @@ void Device::OnCreateEx(
 #if defined(_WIN32)
     // Create a Win32 Surface
     VkWin32SurfaceCreateInfoKHR win32SurfaceCI{};
-    win32SurfaceCI.sType = VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR;
+    win32SurfaceCI.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
     win32SurfaceCI.pNext = nullptr;
     win32SurfaceCI.hinstance = nullptr;
     win32SurfaceCI.hwnd = hWnd;

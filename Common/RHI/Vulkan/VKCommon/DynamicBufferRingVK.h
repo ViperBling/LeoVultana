@@ -23,7 +23,7 @@ namespace LeoVultana_VK
     class DynamicBufferRing
     {
     public:
-        void OnCreate(Device* pDevice, uint32_t numberOfBackBuffers, uint32_t memTotalSize, char* name = nullptr);
+        void OnCreate(Device* pDevice, uint32_t numberOfBackBuffers, uint32_t memTotalSize, const char* name = nullptr);
         void OnDestroy();
         bool AllocateConstantBuffer(uint32_t size, void** pData, VkDescriptorBufferInfo* pOut);
         VkDescriptorBufferInfo AllocateConstantBuffer(uint32_t size, void* pData);

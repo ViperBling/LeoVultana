@@ -282,7 +282,7 @@ int Renderer::LoadScene(GLTFCommon *pGLTFCommon, int Stage)
         Profile p("m_GLTFBBox->OnCreate");
 
         // just a bounding box pass that will draw boundingboxes instead of the geometry itself
-        m_GLTFBBox = new GLTFBoxPass();
+        m_GLTFBBox = new GLTFBBoxPass();
         m_GLTFBBox->OnCreate(
             m_pDevice,
             m_RenderPassJustDepthAndHdr.GetRenderPass(),

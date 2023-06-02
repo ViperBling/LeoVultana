@@ -63,7 +63,7 @@ namespace LeoVultana_VK
             VmaAllocationCreateInfo imageAllocCreateInfo{};
             imageAllocCreateInfo.usage = VMA_MEMORY_USAGE_GPU_ONLY;
             imageAllocCreateInfo.flags = VMA_ALLOCATION_CREATE_USER_DATA_COPY_STRING_BIT;
-            imageAllocCreateInfo.pUserData = "ImGUI tex";
+            imageAllocCreateInfo.pUserData = (void*)"ImGUI tex";
             VmaAllocationInfo gpuImageAllocInfo{};
             VK_CHECK_RESULT(vmaCreateImage(m_pDevice->GetAllocator(), &info, &imageAllocCreateInfo, &mTexture2D, &mImageAlloc, &gpuImageAllocInfo));
             SetResourceName(pDevice->GetDevice(), VK_OBJECT_TYPE_IMAGE, (uint64_t)mTexture2D, (const char*)imageAllocCreateInfo.pUserData);

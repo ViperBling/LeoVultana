@@ -6,7 +6,7 @@
 
 using namespace LeoVultana_VK;
 
-void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, uint32_t memTotalSize, char *name)
+void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, uint32_t memTotalSize, const char *name)
 {
     m_pDevice = pDevice;
     mMemTotalSize = memTotalSize;
@@ -20,7 +20,7 @@ void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, 
     VmaAllocationCreateInfo vmaAllocationCI{};
     vmaAllocationCI.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
     vmaAllocationCI.flags = VMA_ALLOCATION_CREATE_USER_DATA_COPY_STRING_BIT;
-    vmaAllocationCI.pUserData = name;
+    vmaAllocationCI.pUserData = (void*)name;
 
     VK_CHECK_RESULT(vmaCreateBuffer(
         pDevice->GetAllocator(), &bufferCI,

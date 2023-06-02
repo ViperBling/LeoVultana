@@ -25,6 +25,8 @@ include_directories(Externals/ImGui)
 include_directories(Externals/TinyGLTF)
 include_directories(Externals/Json)
 
+include_directories(Projects)
+
 if (NOT CMAKE_VERSION VERSION_LESS 3.7.0)
     message(STATUS "Using module to find Vulkan")
     find_package(Vulkan)

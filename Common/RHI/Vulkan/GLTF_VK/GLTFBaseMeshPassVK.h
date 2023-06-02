@@ -42,21 +42,14 @@ namespace LeoVultana_VK
         std::vector<BasePassPrimitives> mPrimitives;
     };
 
-    class GLTFBaseMeshPassVK
+    class GLTFBaseMeshPass
     {
     public:
         struct PerObjectData
         {
-            math::Matrix4 mWorldViewProj;
-            math::Vector4 mCenter;
-            math::Vector4 mRadius;
-            math::Vector4 mColor;
-            PBRMaterialParametersConstantBuffer mPBRParams;
-        };
-        struct PerFrameData
-        {
             math::Matrix4 mCurrentWorld;
             math::Matrix4 mPreviousWorld;
+            PBRMaterialParametersConstantBuffer mPBRParams;
         };
 
         struct BatchList
@@ -67,6 +60,42 @@ namespace LeoVultana_VK
             VkDescriptorBufferInfo  mPerObjectDesc;
             operator float() { return -mDepth; }
         };
+
+    public:
+        void OnCreate(
+            Device* pDevice,
+            UploadHeap* pUploadHeap,
+            ResourceViewHeaps* pResourceViewHeap,
+            DynamicBufferRing* pDynamicBufferRing,
+            StaticBufferPool* pStaticBufferPool,
+            GLTFTexturesAndBuffers* pGLTFTexAndBuffers,
+            std::vector<VkImageView>& ShadowMapViewPool,
+            GBufferRenderPass* pRenderPass,
+            AsyncPool* pAsyncPool = nullptr
+            );
+        void OnDestroy();
+        void BuildBatchList(
+            std::vector<BatchList>* pSolid,
+            std::vector<BatchList>* pTransparent
+            );
+        void DrawBatchList(VkCommandBuffer cmdBuffer, std::vector<BatchList>* pBatchList);
+
+    private:
+        void CreateDescTableForMaterialTextures(
+            BasePassMaterial* gltfMat,
+            std::map<std::string, VkImageView>& textureBase,
+            std::vector<VkImageView>& ShadowMapViewPool
+            );
+        void CreateDescriptors(
+            int inverseMatrixBufferSize,
+            DefineList* pAttributeDefines,
+            BasePassPrimitives* pPrimitive
+            );
+        void CreatePipeline(
+            std::vector<VkVertexInputAttributeDescription> layout,
+            const DefineList& defines,
+            BasePassPrimitives* pPrimitive
+            );
 
     private:
         GLTFTexturesAndBuffers* m_pGLTFTexturesAndBuffers;
@@ -82,7 +111,7 @@ namespace LeoVultana_VK
 
         Device*             m_pDevice;
         GBufferRenderPass*  m_pRenderPass;
-        VkSampler           mSamplerPBR{};
+        VkSampler           mSamplerMat{};
         VkSampler           mSamplerShadow{};
 
         // PBR BRDF

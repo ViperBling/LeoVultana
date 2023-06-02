@@ -181,7 +181,7 @@ GLTFDepthPass::PerFrame *GLTFDepthPass::SetPerFrameConstants()
 
 void GLTFDepthPass::Draw(VkCommandBuffer cmdBuffer)
 {
-    SetPerfMarkerEnd(cmdBuffer);
+    SetPerfMarkerBegin(cmdBuffer, "DepthPass");
 
     std::vector<gltfNode>* pNodes = &m_pGLTFTexturesAndBuffers->m_pGLTFCommon->mNodes;
     Matrix2* pNodesMatrices = m_pGLTFTexturesAndBuffers->m_pGLTFCommon->mWorldSpaceMats.data();

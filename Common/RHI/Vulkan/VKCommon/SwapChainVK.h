@@ -24,7 +24,7 @@ namespace LeoVultana_VK
             DisplayMode displayMode,
             PresentationMode fullScreenMode = PRESENTATIONMODE_WINDOWED,
             bool enableLocalDimming = true);
-        void EnumrateDisplayMode(
+        void EnumerateDisplayMode(
             std::vector<DisplayMode>* pModes,
             std::vector<const char*>* pNames = nullptr,
             bool includeFreeSyncHDR = false,

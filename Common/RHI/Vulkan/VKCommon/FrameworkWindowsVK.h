@@ -72,10 +72,13 @@ namespace LeoVultana_VK
         // Dispaly Management
         HMONITOR                    mMonitor;
         bool                        mFreeSyncHDROptionEnabled;
+
         DisplayMode                 mPreviousDisplayModeNamesIndex;
         DisplayMode                 mCurrentDisplayModeNamesIndex;
+
         std::vector<DisplayMode>    mDisplayModesAvailable;
         std::vector<const char*>    mDisplayModesNamesAvailable;
+
         bool                        mEnableLocalDimming;
 
         // System Info

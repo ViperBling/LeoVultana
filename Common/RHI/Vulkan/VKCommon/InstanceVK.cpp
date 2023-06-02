@@ -4,8 +4,6 @@
 #include "ExtDebugUtilsVK.h"
 #include "HelperVK.h"
 
-using namespace LeoVultana_VK;
-
 namespace LeoVultana_VK
 {
     uint32_t GetScore(VkPhysicalDevice physicalDevice)
@@ -58,7 +56,7 @@ namespace LeoVultana_VK
         appInfo.applicationVersion = 1;
         appInfo.pEngineName = pEngineName;
         appInfo.engineVersion = 1;
-        appInfo.apiVersion = VK_API_VERSION_1_3;
+        appInfo.apiVersion = VK_API_VERSION_1_1;
         VkInstance instance = CreateInstance(appInfo, pInstProps);
 
         // Enumerate Physical Device
@@ -78,7 +76,7 @@ namespace LeoVultana_VK
         return true;
     }
 
-    VkInstance LeoVultana_VK::CreateInstance(VkApplicationInfo appInfo, InstanceProperties *pInstProps)
+    VkInstance CreateInstance(VkApplicationInfo appInfo, InstanceProperties *pInstProps)
     {
         VkInstance instance;
 
@@ -88,16 +86,16 @@ namespace LeoVultana_VK
         pInstProps->GetExtensionNamesAndConfigs(&instanceLayerNames, &instanceExtensionNames);
 
         // do create the instance
-        VkInstanceCreateInfo inst_info = {};
-        inst_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-        inst_info.pNext = pInstProps->GetNext();
-        inst_info.flags = 0;
-        inst_info.pApplicationInfo = &appInfo;
-        inst_info.enabledLayerCount = (uint32_t)instanceLayerNames.size();
-        inst_info.ppEnabledLayerNames = (uint32_t)instanceLayerNames.size() ? instanceLayerNames.data() : nullptr;
-        inst_info.enabledExtensionCount = (uint32_t)instanceExtensionNames.size();
-        inst_info.ppEnabledExtensionNames = instanceExtensionNames.data();
-        VK_CHECK_RESULT(vkCreateInstance(&inst_info, nullptr, &instance));
+        VkInstanceCreateInfo instanceCI{};
+        instanceCI.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+        instanceCI.pNext = pInstProps->GetNext();
+        instanceCI.flags = 0;
+        instanceCI.pApplicationInfo = &appInfo;
+        instanceCI.enabledLayerCount = (uint32_t)instanceLayerNames.size();
+        instanceCI.ppEnabledLayerNames = (uint32_t)instanceLayerNames.size() ? instanceLayerNames.data() : nullptr;
+        instanceCI.enabledExtensionCount = (uint32_t)instanceExtensionNames.size();
+        instanceCI.ppEnabledExtensionNames = instanceExtensionNames.data();
+        VK_CHECK_RESULT(vkCreateInstance(&instanceCI, nullptr, &instance));
 
         // Init the extensions (if they have been enabled successfuly)
         ExtDebugReportGetProcAddress(instance);

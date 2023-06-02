@@ -27,7 +27,7 @@ namespace LeoVultana_VK
     void ExtCheckFSEDeviceExtensions(DeviceProperties *pDP);
     void ExtCheckFreeSyncHDRDeviceExtensions(DeviceProperties *pDP);
 
-    void ExtGetHDRFSEFreesyncHDRProcAddresses(VkInstance instance, VkDevice device);
+    void ExtGetHDRFSEFreeSyncHDRProcAddresses(VkInstance instance, VkDevice device);
 
     bool ExtAreHDRExtensionsPresent();
     bool ExtAreFSEExtensionsPresent();

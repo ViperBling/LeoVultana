@@ -26,7 +26,7 @@ namespace LeoVultana_VK
 
     static std::unordered_map<DisplayMode, VkSurfaceFormatKHR> availableDisplayModeSurfaceFormats;
 
-    bool s_WindowsHDRtoggle = false;
+    bool s_WindowsHDRToggle = false;
 
     void SetHDRStructures(VkSurfaceKHR surface)
     {
@@ -91,9 +91,7 @@ namespace LeoVultana_VK
     void GetSurfaceFormats(uint32_t* pFormatCount, std::vector<VkSurfaceFormat2KHR>* surfaceFormats)
     {
         // Get list of formats
-        VK_CHECK_RESULT(g_vkGetPhysicalDeviceSurfaceFormats2KHR(
-            s_PhysicalDevice, &s_PhysicalDeviceSurfaceInfo2KHR,
-            pFormatCount, nullptr));
+        VK_CHECK_RESULT(g_vkGetPhysicalDeviceSurfaceFormats2KHR(s_PhysicalDevice, &s_PhysicalDeviceSurfaceInfo2KHR, pFormatCount, nullptr))
 
         uint32_t formatCount = *pFormatCount;
         surfaceFormats->resize(formatCount);
@@ -148,7 +146,7 @@ namespace LeoVultana_VK
                     (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2B10G10R10_UNORM_PACK32 &&
                      allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT))
                 {
-                    s_WindowsHDRtoggle = true;
+                    s_WindowsHDRToggle = true;
                     break;
                 }
             }
@@ -343,7 +341,7 @@ namespace LeoVultana_VK
     bool CheckIfWindowModeHDROn()
     {
 #if WINDOW_HDR_PATH
-        return s_windowsHdrtoggle;
+        return s_windowsHdrToggle;
 #else
         return false;
 #endif

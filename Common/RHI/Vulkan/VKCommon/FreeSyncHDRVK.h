@@ -2,7 +2,7 @@
 
 #include "DevicePropertiesVK.h"
 #include "InstancePropertiesVK.h"
-#include "Vulkan/vulkan_win32.h"
+#include <vulkan/vulkan_win32.h>
 
 namespace LeoVultana_VK
 {

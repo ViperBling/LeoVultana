@@ -4,8 +4,6 @@
 #include "DevicePropertiesVK.h"
 #include "HelperVK.h"
 
-using namespace LeoVultana_VK;
-
 namespace LeoVultana_VK
 {
     const char instanceExtensionName[] = VK_EXT_DEBUG_REPORT_EXTENSION_NAME;
@@ -74,8 +72,8 @@ namespace LeoVultana_VK
             VkDebugReportCallbackCreateInfoEXT debugReportCallbackInfo = { VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT };
             debugReportCallbackInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
             debugReportCallbackInfo.pfnCallback = CustomDebugReportCallback;
-            VkResult res = g_vkCreateDebugReportCallbackEXT(instance, &debugReportCallbackInfo, nullptr, &g_DebugReportCallback);
-            assert(res == VK_SUCCESS);
+            VK_CHECK_RESULT(g_vkCreateDebugReportCallbackEXT(instance, &debugReportCallbackInfo, nullptr, &g_DebugReportCallback))
+
         }
     }
 

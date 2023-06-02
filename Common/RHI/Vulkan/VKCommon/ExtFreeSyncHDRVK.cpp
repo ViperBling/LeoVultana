@@ -52,7 +52,7 @@ namespace LeoVultana_VK
         s_isFSHDRDeviceExtensionsPresent = pDeviceProp->AddDeviceExtensionName(VK_AMD_DISPLAY_NATIVE_HDR_EXTENSION_NAME);
     }
 
-    void ExtGetHDRFSEFreesyncHDRProcAddresses(VkInstance instance, VkDevice device)
+    void ExtGetHDRFSEFreeSyncHDRProcAddresses(VkInstance instance, VkDevice device)
     {
         if (s_isHdrInstanceExtensionPresent)
         {

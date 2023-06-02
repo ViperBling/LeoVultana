@@ -10,6 +10,7 @@ namespace LeoVultana_VK
         void Init();
         bool AddInstanceLayerName(const char* instLayerName);
         bool AddInstanceExtensionName(const char* instExtName);
+
         void * GetNext() { return m_pNext; }
         void SetNewNext(void * pNext) { m_pNext = pNext; }
 

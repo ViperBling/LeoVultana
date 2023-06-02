@@ -18,7 +18,7 @@ bool DeviceProperties::AddDeviceExtensionName(const char *deviceExtensionName)
 {
     if (IsExtensionPresent(deviceExtensionName))
     {
-        mDeviceExtNames.emplace_back(deviceExtensionName);
+        mDeviceExtNames.push_back(deviceExtensionName);
         return true;
     }
 

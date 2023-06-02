@@ -325,7 +325,7 @@ void FrameworkWindows::DeviceInit(HWND hWnd)
     // SwapChain
     uint32_t dwNumberOfBackBuffers = 2;
     mSwapChain.OnCreate(&mDevice, dwNumberOfBackBuffers, mWindowHWND);
-    mSwapChain.EnumrateDisplayMode(&mDisplayModesAvailable, &mDisplayModesNamesAvailable);
+    mSwapChain.EnumerateDisplayMode(&mDisplayModesAvailable, &mDisplayModesNamesAvailable);
     if (mPreviousFullScreenMode != mFullScreenMode)
     {
         HandleFullScreen();
@@ -495,7 +495,7 @@ void FrameworkWindows::OnWindowMove()
     HMONITOR currentMonitor = MonitorFromWindow(mWindowHWND, MONITOR_DEFAULTTONEAREST);
     if (mMonitor != currentMonitor)
     {
-        mSwapChain.EnumrateDisplayMode(&mDisplayModesAvailable, &mDisplayModesNamesAvailable);
+        mSwapChain.EnumerateDisplayMode(&mDisplayModesAvailable, &mDisplayModesNamesAvailable);
         mMonitor = currentMonitor;
         mPreviousDisplayModeNamesIndex = mCurrentDisplayModeNamesIndex = DISPLAYMODE_SDR;
         OnResize(mWidth, mHeight);

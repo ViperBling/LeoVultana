@@ -66,6 +66,7 @@ void Device::SetEssentialDeviceExtensions(DeviceProperties *pDeviceProp)
     ExtRTCheckExtensions(pDeviceProp, mRT10Supported, mRT11Supported);
     ExtVRSCheckExtensions(pDeviceProp, mVRS1Supported, mVRS2Supported);
     ExtCheckHDRDeviceExtensions(pDeviceProp);
+    ExtCheckFSEDeviceExtensions(pDeviceProp);
     ExtCheckFreeSyncHDRDeviceExtensions(pDeviceProp);
     pDeviceProp->AddDeviceExtensionName(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
     pDeviceProp->AddDeviceExtensionName(VK_EXT_SCALAR_BLOCK_LAYOUT_EXTENSION_NAME);
@@ -234,7 +235,7 @@ void Device::OnCreateEx(
 
     // 初始化扩展
     ExtDebugUtilsGetProAddresses(mDevice);
-    ExtGetHDRFSEFreesyncHDRProcAddresses(mInstance, mDevice);
+    ExtGetHDRFSEFreeSyncHDRProcAddresses(mInstance, mDevice);
 }
 
 void Device::OnDestroy()

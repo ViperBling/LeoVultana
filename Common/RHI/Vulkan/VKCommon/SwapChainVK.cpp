@@ -3,10 +3,8 @@
 #include "ExtFreeSyncHDRVK.h"
 #include "ExtDebugUtilsVK.h"
 #include "HelperVK.h"
-#include "Vulkan/vulkan_win32.h"
 
 using namespace LeoVultana_VK;
-
 
 void SwapChain::OnCreate(Device *pDevice, uint32_t numBackBuffers, HWND hWnd)
 {
@@ -107,10 +105,14 @@ void SwapChain::OnCreateWindowSizeDependentResources(
     if (surfaceCapabilities.currentExtent.width == 0xFFFFFFFF)
     {
         // 如果当前尺寸未设置，那么就设为Image请求的大小
-        if (swapChainExtent.width < surfaceCapabilities.minImageExtent.width) swapChainExtent.width = surfaceCapabilities.minImageExtent.width;
-        else if (swapChainExtent.width > surfaceCapabilities.maxImageExtent.width) swapChainExtent.width = surfaceCapabilities.maxImageExtent.width;
-        if (swapChainExtent.height < surfaceCapabilities.minImageExtent.height) swapChainExtent.height = surfaceCapabilities.minImageExtent.height;
-        else if (swapChainExtent.height > surfaceCapabilities.maxImageExtent.height) swapChainExtent.height = surfaceCapabilities.maxImageExtent.height;
+        if (swapChainExtent.width < surfaceCapabilities.minImageExtent.width)
+            swapChainExtent.width = surfaceCapabilities.minImageExtent.width;
+        else if (swapChainExtent.width > surfaceCapabilities.maxImageExtent.width) 
+            swapChainExtent.width = surfaceCapabilities.maxImageExtent.width;
+        if (swapChainExtent.height < surfaceCapabilities.minImageExtent.height) 
+            swapChainExtent.height = surfaceCapabilities.minImageExtent.height;
+        else if (swapChainExtent.height > surfaceCapabilities.maxImageExtent.height) 
+            swapChainExtent.height = surfaceCapabilities.maxImageExtent.height;
     }
     else
     {
@@ -131,7 +133,7 @@ void SwapChain::OnCreateWindowSizeDependentResources(
         VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
     };
 
-    for (uint32_t i = 0; i < sizeof(compositeAlphaFlags); i++)
+    for (uint32_t i = 0; i < 4; i++)
     {
         if (surfaceCapabilities.supportedCompositeAlpha & compositeAlphaFlags[i])
         {
@@ -144,7 +146,7 @@ void SwapChain::OnCreateWindowSizeDependentResources(
     uint32_t  presentModeCount;
     VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &presentModeCount, nullptr));
     std::vector<VkPresentModeKHR> presentModes(presentModeCount);
-    VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &presentModeCount, presentModes.data()));
+    VK_CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &presentModeCount, &presentModes[0]));
 
     VkSwapchainCreateInfoKHR swapChainCI{};
     swapChainCI.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -156,12 +158,10 @@ void SwapChain::OnCreateWindowSizeDependentResources(
     swapChainCI.imageColorSpace = mSwapChainFormat.colorSpace;
     swapChainCI.imageExtent.width = swapChainExtent.width;
     swapChainCI.imageExtent.height = swapChainExtent.height;
-
     swapChainCI.preTransform = preTransform;
     swapChainCI.compositeAlpha = compositeAlpha;
     swapChainCI.imageArrayLayers = 1;
-    // The FIFO present mode is guaranteed by the spec to be supported
-    swapChainCI.presentMode = m_bVSyncOn ? VK_PRESENT_MODE_FIFO_KHR : VK_PRESENT_MODE_IMMEDIATE_KHR;
+    swapChainCI.presentMode = m_bVSyncOn ? VK_PRESENT_MODE_FIFO_KHR : VK_PRESENT_MODE_IMMEDIATE_KHR;  // The FIFO present mode is guaranteed by the spec to be supported
     swapChainCI.oldSwapchain = VK_NULL_HANDLE;
     swapChainCI.clipped = true;
     swapChainCI.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
@@ -179,11 +179,9 @@ void SwapChain::OnCreateWindowSizeDependentResources(
         swapChainCI.queueFamilyIndexCount = 2;
         swapChainCI.pQueueFamilyIndices = queueFamilyIndices;
     }
-
-    VK_CHECK_RESULT(vkCreateSwapchainKHR(device, &swapChainCI, nullptr, &mSwapChain));
+    VK_CHECK_RESULT(vkCreateSwapchainKHR(device, &swapChainCI, nullptr, &mSwapChain))
 
     // Get capabilities is only for FS HDR
-    //
     if (displayMode == DISPLAYMODE_FSHDR_Gamma22 || displayMode == DISPLAYMODE_FSHDR_SCRGB)
     {
         FSHDRGetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, surface, nullptr);
@@ -192,12 +190,12 @@ void SwapChain::OnCreateWindowSizeDependentResources(
 
     // we are querying the swapchain count so the next call doesn't generate a validation warning
     uint32_t backBufferCount;
-    VK_CHECK_RESULT(vkGetSwapchainImagesKHR(device, mSwapChain, &backBufferCount, NULL));
+    VK_CHECK_RESULT(vkGetSwapchainImagesKHR(device, mSwapChain, &backBufferCount, nullptr))
 
     assert(backBufferCount == mBackBufferCount);
 
     mImages.resize(mBackBufferCount);
-    VK_CHECK_RESULT(vkGetSwapchainImagesKHR(device, mSwapChain, &mBackBufferCount, mImages.data()));
+    VK_CHECK_RESULT(vkGetSwapchainImagesKHR(device, mSwapChain, &mBackBufferCount, mImages.data()))
 
     CreateRTV();
     CreateFrameBuffers(dwWidth, dwHeight);
@@ -224,11 +222,11 @@ bool SwapChain::IsModeSupported(
     bool enableLocalDimming)
 {
     std::vector<DisplayMode> displayModeAvailable;
-    EnumrateDisplayMode(&displayModeAvailable, nullptr, displayMode != DISPLAYMODE_SDR, fullScreenMode, enableLocalDimming);
+    EnumerateDisplayMode(&displayModeAvailable, nullptr, displayMode != DISPLAYMODE_SDR, fullScreenMode, enableLocalDimming);
     return std::find(displayModeAvailable.begin(), displayModeAvailable.end(), displayMode) != displayModeAvailable.end();
 }
 
-void SwapChain::EnumrateDisplayMode(
+void SwapChain::EnumerateDisplayMode(
     std::vector<DisplayMode> *pModes,
     std::vector<const char *> *pNames,
     bool includeFreeSyncHDR, PresentationMode fullScreenMode, bool enableLocalDimming)
@@ -322,7 +320,8 @@ void SwapChain::CreateRTV()
 
 void SwapChain::DestroyRTV()
 {
-    for (uint32_t i = 0; i < mImageViews.size(); i++) vkDestroyImageView(m_pDevice->GetDevice(), mImageViews[i], nullptr);
+    for (uint32_t i = 0; i < mImageViews.size(); i++)
+        vkDestroyImageView(m_pDevice->GetDevice(), mImageViews[i], nullptr);
 }
 
 void SwapChain::CreateRenderPass()
@@ -341,7 +340,7 @@ void SwapChain::CreateRenderPass()
 
     VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
 
-    VkSubpassDescription subpass = {};
+    VkSubpassDescription subpass{};
     subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
     subpass.flags = 0;
     subpass.inputAttachmentCount = 0;
@@ -353,7 +352,7 @@ void SwapChain::CreateRenderPass()
     subpass.preserveAttachmentCount = 0;
     subpass.pPreserveAttachments = nullptr;
 
-    VkSubpassDependency subpassDependency = {};
+    VkSubpassDependency subpassDependency{};
     subpassDependency.dependencyFlags = 0;
     subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
     subpassDependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -391,23 +390,24 @@ void SwapChain::CreateFrameBuffers(uint32_t dwWidth, uint32_t dwHeight)
     {
         VkImageView attachments[] = { mImageViews[i] };
 
-        VkFramebufferCreateInfo fb_info = {};
-        fb_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-        fb_info.pNext = nullptr;
-        fb_info.renderPass = mRenderPassSwapChain;
-        fb_info.attachmentCount = 1;
-        fb_info.pAttachments = attachments;
-        fb_info.width = dwWidth;
-        fb_info.height = dwHeight;
-        fb_info.layers = 1;
+        VkFramebufferCreateInfo frameBufferCI{};
+        frameBufferCI.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+        frameBufferCI.pNext = nullptr;
+        frameBufferCI.renderPass = mRenderPassSwapChain;
+        frameBufferCI.attachmentCount = 1;
+        frameBufferCI.pAttachments = attachments;
+        frameBufferCI.width = dwWidth;
+        frameBufferCI.height = dwHeight;
+        frameBufferCI.layers = 1;
 
-        VK_CHECK_RESULT(vkCreateFramebuffer(m_pDevice->GetDevice(), &fb_info, nullptr, &mFrameBuffers[i]));
+        VK_CHECK_RESULT(vkCreateFramebuffer(m_pDevice->GetDevice(), &frameBufferCI, nullptr, &mFrameBuffers[i]));
 
-        SetResourceName(m_pDevice->GetDevice(), VK_OBJECT_TYPE_FRAMEBUFFER, (uint64_t)mFrameBuffers[i], "SwapChain");
+        SetResourceName(m_pDevice->GetDevice(), VK_OBJECT_TYPE_FRAMEBUFFER, (uint64_t)mFrameBuffers[i], "SwapChainFrameBuffer");
     }
 }
 
 void SwapChain::DestroyFrameBuffers()
 {
-    for (uint32_t i = 0; i < mFrameBuffers.size(); i++) vkDestroyFramebuffer(m_pDevice->GetDevice(), mFrameBuffers[i], nullptr);
+    for (uint32_t i = 0; i < mFrameBuffers.size(); i++)
+        vkDestroyFramebuffer(m_pDevice->GetDevice(), mFrameBuffers[i], nullptr);
 }

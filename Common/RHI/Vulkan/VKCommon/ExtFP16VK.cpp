@@ -23,7 +23,6 @@ namespace LeoVultana_VK
                 Trace(format("FP16 disabled, missing extension: %s\n", ext));
                 bFP16Enabled = false;
             }
-
         }
 
         if (bFP16Enabled)

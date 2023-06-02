@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vulkan/vulkan.h"
+#include <vulkan/vulkan.h>
 #include "InstancePropertiesVK.h"
 
 namespace LeoVultana_VK

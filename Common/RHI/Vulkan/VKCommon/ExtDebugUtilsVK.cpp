@@ -1,7 +1,5 @@
 #include "PCHVK.h"
-
 #include "ExtDebugUtilsVK.h"
-#include "Misc.h"
 
 namespace LeoVultana_VK
 {

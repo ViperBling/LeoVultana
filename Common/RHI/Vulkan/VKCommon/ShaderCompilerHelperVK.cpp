@@ -66,7 +66,7 @@ namespace LeoVultana_VK
         if (sourceType == SST_GLSL)
         {
             commandLine = format(
-                "glslc --target-env=vulkan1.3 -fshader-stage=%s -fentry-point=%s %s \"%s\" -o \"%s\" -I %s %s",
+                "glslc --target-env=vulkan1.1 -fshader-stage=%s -fentry-point=%s %s \"%s\" -o \"%s\" -I %s %s",
                 stage, pShaderEntryPoint, shaderCompilerParams,
                 filenameGlsl.c_str(), filenameSpv.c_str(),
                 GetShaderCompilerLibDir().c_str(), defines.c_str());

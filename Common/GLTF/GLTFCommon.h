@@ -2,7 +2,7 @@
 
 #include "PCH.h"
 #include "json.h"
-#include "Function/Camera.h"
+#include "Utilities/Camera.h"
 #include "GLTFStructures.h"
 
 using json = nlohmann::json;
@@ -50,19 +50,19 @@ const uint32_t LightType_Spot = 2;
 
 struct PerFrame
 {
-    math::Matrix4 mCameraCurrViewProj;
-    math::Matrix4 mCameraPrevViewProj;
-    math::Matrix4 mInverseCameraCurrViewProj;
-    math::Vector4 cameraPos;
-    float     iblFactor;
-    float     emissiveFactor;
-    float     invScreenResolution[2];
+    math::Matrix4   mCameraCurrViewProj;
+    math::Matrix4   mCameraPrevViewProj;
+    math::Matrix4   mInverseCameraCurrViewProj;
+    math::Vector4   mCameraPos;
+    float           mIBLFactor;
+    float           mEmissiveFactor;
+    float           mInvScreenResolution[2];
 
-    math::Vector4 wireframeOptions;
-    float     lodBias = 0.0f;
-    uint32_t  padding[2];
-    uint32_t  lightCount;
-    Light     lights[MaxLightInstances];
+    math::Vector4 mWireframeOptions;
+    float     mLODBias = 0.0f;
+    uint32_t  mPadding[2];
+    uint32_t  mLightCount;
+    Light     mLights[MaxLightInstances];
 };
 
 //

@@ -26,7 +26,7 @@ int GetDimensions(const std::string &str)
     else return  -1;
 }
 
-void SplitGltfAttribute(std::string attribute, std::string *semanticName, uint32_t *semanticIndex)
+void SplitGLTFAttribute(std::string attribute, std::string *semanticName, uint32_t *semanticIndex)
 {
     *semanticIndex = 0;
 

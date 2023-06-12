@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PCH.h"
-#include <DXGIFormat.h>
+#include <dxgiformat.h>
 #include "ImgLoader.h"
 
 class DDSLoader : public ImgLoader

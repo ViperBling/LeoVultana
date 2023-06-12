@@ -48,8 +48,8 @@
 #include "RHI/Vulkan/GLTF_VK/GLTFBaseMeshPassVK.h"
 #include "RHI/Vulkan/GLTF_VK/GLTFDepthPassVK.h"
 
-#include "Function/Misc.h"
-#include "Function/Camera.h"
+#include "Utilities/Misc.h"
+#include "Utilities/Camera.h"
 
 #include "RHI/Vulkan/PostProcess/SkyDome.h"
 

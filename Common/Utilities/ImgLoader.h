@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include <DXGIFormat.h>
+#include <dxgiformat.h>
 
 struct IMG_INFO
 {

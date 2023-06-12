@@ -245,7 +245,7 @@ void GLTFSample::LoadScene(int sceneIndex)
         if (m_pGltfLoader->mLights.size() == 0)
         {
             gltfNode n;
-            n.mTranform.LookAt(PolarToVector(AMD_PI_OVER_2, 0.58f) * 3.5f, math::Vector4(0, 0, 0, 0));
+            n.mTransform.LookAt(PolarToVector(AMD_PI_OVER_2, 0.58f) * 3.5f, math::Vector4(0, 0, 0, 0));
 
             gltfLight l;
             l.mType = gltfLight::LIGHT_SPOTLIGHT;

@@ -27,7 +27,8 @@ endfunction(buildProjects)
 
 set(PROJECTS
 #        GLTFSample
-        LibraryTest
+    LibraryTest
+    HelloTriangle
         )
 
 buildProjects()

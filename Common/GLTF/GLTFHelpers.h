@@ -8,7 +8,7 @@ using json = nlohmann::json;
 
 int GetFormatSize(int id);
 int GetDimensions(const std::string &str);
-void SplitGltfAttribute(std::string attribute, std::string *semanticName, uint32_t *semanticIndex);
+void SplitGLTFAttribute(std::string attribute, std::string *semanticName, uint32_t *semanticIndex);
 
 math::Vector4 GetVector(const json::array_t &accessor);
 math::Matrix4 GetMatrix(const json::array_t &accessor);

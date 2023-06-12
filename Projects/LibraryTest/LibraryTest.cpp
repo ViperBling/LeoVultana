@@ -105,8 +105,8 @@ void LibraryTest::BuildUI()
             if (ImGui::Button("Set Spot Light 0 to Camera's View"))
             {
                 int idx = m_pGLTFLoader->mLightInstances[0].mNodeIndex;
-                m_pGLTFLoader->mNodes[idx].mTranform.LookAt(mCamera.GetPosition(), mCamera.GetPosition() - mCamera.GetDirection());
-                m_pGLTFLoader->mAnimatedMats[idx] = m_pGLTFLoader->mNodes[idx].mTranform.GetWorldMat();
+                m_pGLTFLoader->mNodes[idx].mTransform.LookAt(mCamera.GetPosition(), mCamera.GetPosition() - mCamera.GetDirection());
+                m_pGLTFLoader->mAnimatedMats[idx] = m_pGLTFLoader->mNodes[idx].mTransform.GetWorldMat();
             }
         }
 
@@ -480,7 +480,7 @@ void LibraryTest::LoadScene(int sceneIndex)
         if (m_pGLTFLoader->mLights.empty())
         {
             gltfNode node;
-            node.mTranform.LookAt(PolarToVector(AMD_PI_OVER_2, 0.58f) * 3.5f, math::Vector4(0, 0, 0, 0));
+            node.mTransform.LookAt(PolarToVector(AMD_PI_OVER_2, 0.58f) * 3.5f, math::Vector4(0, 0, 0, 0));
 
             gltfLight light;
             light.mType = gltfLight::LIGHT_SPOTLIGHT;

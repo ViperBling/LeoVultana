@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DeviceVK.h"
-#include "Function/Ring.h"
+#include "Utilities/Ring.h"
 #include "Vulkan/vk_mem_alloc.h"
 
 namespace LeoVultana_VK

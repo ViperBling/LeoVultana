@@ -1,7 +1,7 @@
 #pragma once
 
 #include "WireframeVK.h"
-#include "Function/WirePrimitives.h"
+#include "Utilities/WirePrimitives.h"
 
 namespace LeoVultana_VK
 {

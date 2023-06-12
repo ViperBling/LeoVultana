@@ -20,7 +20,7 @@
 
 #include "GLTFSamplePCH.h"
 #include "GLTF/GLTFCommon.h"
-#include "Function/Async.h"
+#include "Utilities/Async.h"
 #include "RHI/Vulkan/PostProcess/MagnifierPS.h"
 #include "Utilities/Benchmark.h"
 

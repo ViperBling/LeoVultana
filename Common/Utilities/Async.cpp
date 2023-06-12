@@ -7,13 +7,15 @@
 #include "Async.h"
 #include "Misc.h"
 
-int Sync::Inc() {
+int Sync::Inc()
+{
     std::unique_lock<std::mutex> lock(mMutex);
     mCount++;
     return mCount;
 }
 
-int Sync::Dec() {
+int Sync::Dec()
+{
     std::unique_lock<std::mutex> lock(mMutex);
     mCount--;
     if (mCount == 0)
@@ -21,18 +23,21 @@ int Sync::Dec() {
     return mCount;
 }
 
-int Sync::Get() {
+int Sync::Get()
+{
     std::unique_lock<std::mutex> lock(mMutex);
     return mCount;
 }
 
-void Sync::Reset() {
+void Sync::Reset()
+{
     std::unique_lock<std::mutex> lock(mMutex);
     mCount = 0;
     mCondition.notify_all();
 }
 
-void Sync::Wait() {
+void Sync::Wait()
+{
     std::unique_lock<std::mutex> lock(mMutex);
     while (mCount != 0)
         mCondition.wait(lock);
@@ -50,7 +55,6 @@ Async::Async(std::function<void()> job, Sync *pSync) : mJob{job}, m_pSync{pSync}
         {
             sCondition.wait(lock);
         }
-
         sActiveThreads++;
     }
 
@@ -63,8 +67,7 @@ Async::Async(std::function<void()> job, Sync *pSync) : mJob{job}, m_pSync{pSync}
                 sActiveThreads--;
             }
             sCondition.notify_one();
-            if (m_pSync)
-                m_pSync->Dec();
+            if (m_pSync) m_pSync->Dec();
         });
 }
 
@@ -74,8 +77,7 @@ Async::~Async() {
 }
 
 void Async::Wait(Sync *pSync) {
-    if (pSync->Get() == 0)
-        return;
+    if (pSync->Get() == 0) return;
 
     {
         std::lock_guard <std::mutex> lock(sMutex);
@@ -88,10 +90,9 @@ void Async::Wait(Sync *pSync) {
 
     {
         std::unique_lock<std::mutex> lock(sMutex);
-
         sCondition.wait(lock, []
         {
-            return s_bExiting || (sActiveThreads<sMaxThreads);
+            return s_bExiting || (sActiveThreads < sMaxThreads);
         });
 
         sActiveThreads++;

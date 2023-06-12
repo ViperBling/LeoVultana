@@ -14,6 +14,7 @@ bool SaveFile(const char *name, void const*data, size_t size, bool isbinary);
 void Trace(const std::string &str);
 void Trace(const char* pFormat, ...);
 bool LaunchProcess(const char* commandLine, const char* filenameErr);
+
 inline void GetXYZ(float *f, math::Vector4 v)
 {
     f[0] = v.getX();

@@ -301,9 +301,9 @@ void Renderer::OnRender(const UIState *pState, const Camera &camera, SwapChain *
     {
         pPerFrame = m_pGLTFTexturesAndBuffers->m_pGLTFCommon->SetPerFrameData(camera);
 
-        pPerFrame->invScreenResolution[0] = 1.0f / ((float)mWidth);
-        pPerFrame->invScreenResolution[1] = 1.0f / ((float)mHeight);
-        pPerFrame->lodBias = 0.0f;
+        pPerFrame->mInvScreenResolution[0] = 1.0f / ((float)mWidth);
+        pPerFrame->mInvScreenResolution[1] = 1.0f / ((float)mHeight);
+        pPerFrame->mLODBias = 0.0f;
         m_pGLTFTexturesAndBuffers->SetPerFrameConstants();
         m_pGLTFTexturesAndBuffers->SetSkinningMatricesForSkeletons();
     }
@@ -340,7 +340,7 @@ void Renderer::OnRender(const UIState *pState, const Camera &camera, SwapChain *
 
             // Set per frame constant buffer values
             GLTFDepthPass::PerFrame* cbPerFrame = m_pGLTFDepthPass->SetPerFrameConstants();
-            cbPerFrame->mViewProj = pPerFrame->lights[ShadowMap->LightIndex].mLightViewProj;
+            cbPerFrame->mViewProj = pPerFrame->mLights[ShadowMap->LightIndex].mLightViewProj;
 
             m_pGLTFDepthPass->Draw(cmdBuffer1);
 

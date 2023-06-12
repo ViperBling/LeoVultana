@@ -79,7 +79,7 @@ struct gltfNode
 
     std::string mName;
 
-    Transform mTranform;
+    Transform mTransform;
 };
 
 struct NodeMatrixPostTransform

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DxGIFormat.h>
+#include <dxgiformat.h>
 
 // Return the BPP for a particular format
 size_t BitsPerPixel(DXGI_FORMAT format);

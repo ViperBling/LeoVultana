@@ -61,7 +61,7 @@ void BenchmarkConfig(const json& benchmark, int cameraId, GLTFCommon *pGltfLoade
         exit(0);
     }
 
-    bm.f = NULL;
+    bm.f = nullptr;
     bm.frame = 0;
     // the number of frames to run before the benchmark starts
     bm.warmUpFrames = benchmark.value("warmUpFrames", 200);
@@ -84,7 +84,7 @@ void BenchmarkConfig(const json& benchmark, int cameraId, GLTFCommon *pGltfLoade
     // Set default timeStart/timeEnd
     bm.timeStart = 0;
     bm.timeEnd = 0;
-    if ((pGltfLoader!=NULL) && (pGltfLoader->mAnimations.size() > 0))
+    if ((pGltfLoader != nullptr) && (!pGltfLoader->mAnimations.empty()))
     {
         //if there is an animation take the endTime from the animation
         bm.timeEnd = pGltfLoader->mAnimations[0].mDuration;
@@ -99,7 +99,7 @@ void BenchmarkConfig(const json& benchmark, int cameraId, GLTFCommon *pGltfLoade
     //
     bm.mAnimationFound = false;
     bm.cameraId = cameraId;
-    if ((pGltfLoader == NULL) || cameraId==-1)
+    if ((pGltfLoader == nullptr) || cameraId==-1)
     {
         if (benchmark.find("sequence") != benchmark.end())
         {
@@ -121,7 +121,7 @@ void BenchmarkConfig(const json& benchmark, int cameraId, GLTFCommon *pGltfLoade
         // a camera from the GLTF will be used
         // check such a camera exist, otherwise show an error and quit
         Camera Cam;
-        if (pGltfLoader->GetCamera(cameraId, &Cam) == false)
+        if (!pGltfLoader->GetCamera(cameraId, &Cam))
         {
             Trace(format("The cameraId %i doesn't exist in the GLTF\n", cameraId));
             exit(0);
@@ -155,7 +155,7 @@ float BenchmarkLoop(const std::vector<TimeStamp> &timeStamps, Camera *pCam, std:
     SaveTimestamps(bm.time, timeStamps);
 
     // animate camera
-    if (bm.mAnimationFound && (pCam != NULL))
+    if (bm.mAnimationFound && (pCam != nullptr))
     {
         // if GLTF has camera with cameraID then use that camera and its animation
         if (bm.cameraId >= 0)

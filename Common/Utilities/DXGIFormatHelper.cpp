@@ -30,7 +30,7 @@
 //--------------------------------------------------------------------------------------
 
 #include "PCH.h"
-#include "DxgiFormatHelper.h"
+#include "DXGIFormatHelper.h"
 
 //--------------------------------------------------------------------------------------
 // Return the BPP for a particular format

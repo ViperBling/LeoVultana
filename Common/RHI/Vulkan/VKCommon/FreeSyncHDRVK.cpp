@@ -136,32 +136,39 @@ namespace LeoVultana_VK
             SetHDRStructures(s_Surface);
 
             uint32_t formatCount;
-            std::vector<VkSurfaceFormat2KHR> allSurfaceFormats;
-            GetSurfaceFormats(&formatCount, &allSurfaceFormats);
+            std::vector<VkSurfaceFormat2KHR> surfFormats;
+            GetSurfaceFormats(&formatCount, &surfFormats);
 
-            for (uint32_t i = 0; i < formatCount; ++i)
+            for (uint32_t i = 0; i < formatCount; i++)
             {
-                if ((allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
-                     allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT) ||
-                    (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2B10G10R10_UNORM_PACK32 &&
-                     allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT))
+                if ((surfFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
+                     surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT)
+                    ||
+                    (surfFormats[i].surfaceFormat.format == VK_FORMAT_A2B10G10R10_UNORM_PACK32 &&
+                     surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT))
                 {
+                    // If surface formats have HDR10 format even before fullscreen surface is attached, it can only mean windows hdr toggle is on
                     s_WindowsHDRToggle = true;
                     break;
                 }
             }
-        } else
+        } 
+        else
         {
             s_PhysicalDeviceSurfaceInfo2KHR.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SURFACE_INFO_2_KHR;
             s_PhysicalDeviceSurfaceInfo2KHR.pNext = nullptr;
             s_PhysicalDeviceSurfaceInfo2KHR.surface = s_Surface;
         }
 
-        if (ExtAreFSEExtensionsPresent()) SetFSEStructures(s_hWnd, fullscreenMode);
+        if (ExtAreFSEExtensionsPresent())
+        {
+            SetFSEStructures(s_hWnd, fullscreenMode);
+        }
 
         if (includeFreeSyncHDR && ExtAreFreeSyncHDRExtensionsPresent())
         {
             SetFreeSyncHDRStructures();
+
             // Calling get capabilities here to query for local dimming support
             FSHDRGetPhysicalDeviceSurfaceCapabilities2KHR(s_PhysicalDevice, s_Surface, nullptr);
 
@@ -169,43 +176,44 @@ namespace LeoVultana_VK
         }
 
         uint32_t formatCount;
-        std::vector<VkSurfaceFormat2KHR> allSurfaceFormats;
-        GetSurfaceFormats(&formatCount, &allSurfaceFormats);
+        std::vector<VkSurfaceFormat2KHR> surfFormats;
+        GetSurfaceFormats(&formatCount, &surfFormats);
 
         for (uint32_t i = 0; i < formatCount; i++)
         {
-            if (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
-                allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_DISPLAY_NATIVE_AMD)
+            if (surfFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
+                surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_DISPLAY_NATIVE_AMD)
             {
                 pModes->push_back(DISPLAYMODE_FSHDR_Gamma22);
-                availableDisplayModeSurfaceFormats[DISPLAYMODE_FSHDR_Gamma22] = allSurfaceFormats[i].surfaceFormat;
+                availableDisplayModeSurfaceFormats[DISPLAYMODE_FSHDR_Gamma22] = surfFormats[i].surfaceFormat;
             }
-            else if (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_R16G16B16A16_SFLOAT &&
-                allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_DISPLAY_NATIVE_AMD)
+            else if (surfFormats[i].surfaceFormat.format == VK_FORMAT_R16G16B16A16_SFLOAT &&
+                     surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_DISPLAY_NATIVE_AMD)
             {
                 pModes->push_back(DISPLAYMODE_FSHDR_SCRGB);
-                availableDisplayModeSurfaceFormats[DISPLAYMODE_FSHDR_SCRGB] = allSurfaceFormats[i].surfaceFormat;
+                availableDisplayModeSurfaceFormats[DISPLAYMODE_FSHDR_SCRGB] = surfFormats[i].surfaceFormat;
             }
         }
 
         for (uint32_t i = 0; i < formatCount; i++)
         {
-            if ((allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
-                 allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT) ||
-                (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_A2B10G10R10_UNORM_PACK32 &&
-                 allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT))
+            if ((surfFormats[i].surfaceFormat.format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 &&
+                 surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT)
+                 ||
+                (surfFormats[i].surfaceFormat.format == VK_FORMAT_A2B10G10R10_UNORM_PACK32 &&
+                 surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_HDR10_ST2084_EXT))
             {
                 if (availableDisplayModeSurfaceFormats.find(DISPLAYMODE_HDR10_2084) == availableDisplayModeSurfaceFormats.end())
                 {
                     pModes->push_back(DISPLAYMODE_HDR10_2084);
-                    availableDisplayModeSurfaceFormats[DISPLAYMODE_HDR10_2084] = allSurfaceFormats[i].surfaceFormat;
+                    availableDisplayModeSurfaceFormats[DISPLAYMODE_HDR10_2084] = surfFormats[i].surfaceFormat;
                 }
             }
-            else if (allSurfaceFormats[i].surfaceFormat.format == VK_FORMAT_R16G16B16A16_SFLOAT &&
-                allSurfaceFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT)
+            else if (surfFormats[i].surfaceFormat.format == VK_FORMAT_R16G16B16A16_SFLOAT &&
+                     surfFormats[i].surfaceFormat.colorSpace == VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT)
             {
                 pModes->push_back(DISPLAYMODE_HDR10_SCRGB);
-                availableDisplayModeSurfaceFormats[DISPLAYMODE_HDR10_SCRGB] = allSurfaceFormats[i].surfaceFormat;
+                availableDisplayModeSurfaceFormats[DISPLAYMODE_HDR10_SCRGB] = surfFormats[i].surfaceFormat;
             }
         }
 
@@ -341,7 +349,7 @@ namespace LeoVultana_VK
     bool CheckIfWindowModeHDROn()
     {
 #if WINDOW_HDR_PATH
-        return s_windowsHdrToggle;
+        return s_WindowsHDRToggle;
 #else
         return false;
 #endif

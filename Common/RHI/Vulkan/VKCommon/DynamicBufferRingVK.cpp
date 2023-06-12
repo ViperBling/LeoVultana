@@ -24,7 +24,7 @@ void DynamicBufferRing::OnCreate(Device *pDevice, uint32_t numberOfBackBuffers, 
 
     VK_CHECK_RESULT(vmaCreateBuffer(
         pDevice->GetAllocator(), &bufferCI,
-        &vmaAllocationCI, &mBuffer, &mBufferAllocation,nullptr));
+        &vmaAllocationCI, &mBuffer, &mBufferAllocation, nullptr));
     SetResourceName(pDevice->GetDevice(), VK_OBJECT_TYPE_BUFFER, (uint64_t)mBuffer, "DynamicBufferRing");
     VK_CHECK_RESULT(vmaMapMemory(pDevice->GetAllocator(), mBufferAllocation, (void**)&m_pData));
 #else
@@ -105,14 +105,16 @@ VkDescriptorBufferInfo DynamicBufferRing::AllocateConstantBuffer(uint32_t size, 
 }
 
 bool DynamicBufferRing::AllocateVertexBuffer(
-    uint32_t numberOfVertices, uint32_t strideInBytes,
+    uint32_t numberOfVertices,
+    uint32_t strideInBytes,
     void **pData, VkDescriptorBufferInfo *pOut)
 {
     return AllocateConstantBuffer(numberOfVertices * strideInBytes, pData, pOut);
 }
 
 bool DynamicBufferRing::AllocateIndexBuffer(
-    uint32_t numberOfIndices, uint32_t strideInBytes,
+    uint32_t numberOfIndices, 
+    uint32_t strideInBytes,
     void **pData, VkDescriptorBufferInfo *pOut)
 {
     return AllocateConstantBuffer(numberOfIndices * strideInBytes, pData, pOut);
@@ -130,8 +132,7 @@ void DynamicBufferRing::SetDescriptorSet(int index, uint32_t size, VkDescriptorS
     out.offset = 0;
     out.range = size;
 
-    VkWriteDescriptorSet write;
-    write = {};
+    VkWriteDescriptorSet write{};
     write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
     write.pNext = nullptr;
     write.dstSet = descriptorSet;

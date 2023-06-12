@@ -131,7 +131,7 @@ void GBuffer::OnCreateWindowSizeDependentResources(SwapChain *pSwapChain, uint32
         mMotionVectors.InitRenderTarget(
             m_pDevice, width, height, mFormats[GBUFFER_MOTION_VECTORS], mSampleCount,
             (VkImageUsageFlags)(VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT),
-            false, "m_MotionVector");
+            false, "mMotionVectors");
         mMotionVectors.CreateSRV(&mMotionVectorsSRV);
     }
 
@@ -141,7 +141,7 @@ void GBuffer::OnCreateWindowSizeDependentResources(SwapChain *pSwapChain, uint32
         mNormalBuffer.InitRenderTarget(
             m_pDevice, width, height, mFormats[GBUFFER_NORMAL_BUFFER], mSampleCount,
             (VkImageUsageFlags)(VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT),
-            false, "m_NormalBuffer");
+            false, "mNormalBuffer");
         mNormalBuffer.CreateSRV(&mNormalBufferSRV);
     }
 
@@ -151,7 +151,7 @@ void GBuffer::OnCreateWindowSizeDependentResources(SwapChain *pSwapChain, uint32
         mDiffuse.InitRenderTarget(
             m_pDevice, width, height, mFormats[GBUFFER_DIFFUSE], mSampleCount,
             (VkImageUsageFlags)(VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT),
-            false, "m_Diffuse");
+            false, "mDiffuse");
         mDiffuse.CreateSRV(&mDiffuseSRV);
     }
 
@@ -161,14 +161,14 @@ void GBuffer::OnCreateWindowSizeDependentResources(SwapChain *pSwapChain, uint32
         mSpecularRoughness.InitRenderTarget(
             m_pDevice, width, height, mFormats[GBUFFER_SPECULAR_ROUGHNESS], mSampleCount,
             (VkImageUsageFlags)(VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT),
-            false, "m_SpecularRoughness");
+            false, "mSpecularRoughness");
         mSpecularRoughness.CreateSRV(&mSpecularRoughnessSRV);
     }
 
     // Create depth buffer
     if (mGBufferFlags & GBUFFER_DEPTH)
     {
-        mDepthBuffer.InitDepthStencil(m_pDevice, width, height, mFormats[GBUFFER_DEPTH], mSampleCount, "DepthBuffer");
+        mDepthBuffer.InitDepthStencil(m_pDevice, width, height, mFormats[GBUFFER_DEPTH], mSampleCount, "mDepthBuffer");
         mDepthBuffer.CreateDSV(&mDepthBufferDSV);
         mDepthBuffer.CreateRTV(&mDepthBufferSRV);
     }

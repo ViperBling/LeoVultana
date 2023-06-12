@@ -60,12 +60,12 @@ namespace LeoVultana_VK
             info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
             info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-            VmaAllocationCreateInfo imageAllocCreateInfo{};
+            VmaAllocationCreateInfo imageAllocCreateInfo = {};
             imageAllocCreateInfo.usage = VMA_MEMORY_USAGE_GPU_ONLY;
             imageAllocCreateInfo.flags = VMA_ALLOCATION_CREATE_USER_DATA_COPY_STRING_BIT;
             imageAllocCreateInfo.pUserData = (void*)"ImGUI tex";
-            VmaAllocationInfo gpuImageAllocInfo{};
-            VK_CHECK_RESULT(vmaCreateImage(m_pDevice->GetAllocator(), &info, &imageAllocCreateInfo, &mTexture2D, &mImageAlloc, &gpuImageAllocInfo));
+            VmaAllocationInfo gpuImageAllocInfo = {};
+            VK_CHECK_RESULT(vmaCreateImage(m_pDevice->GetAllocator(), &info, &imageAllocCreateInfo, &mTexture2D, &mImageAlloc, &gpuImageAllocInfo))
             SetResourceName(pDevice->GetDevice(), VK_OBJECT_TYPE_IMAGE, (uint64_t)mTexture2D, (const char*)imageAllocCreateInfo.pUserData);
         }
 
@@ -90,7 +90,7 @@ namespace LeoVultana_VK
         // Allocate memory int upload heap and copy the texture into it
         char *ptr = (char*)pUploadHeap->SubAllocate(upload_size, 512);
 
-        memcpy(ptr, pixels, width*height * 4);
+        memcpy(ptr, pixels, width * height * 4);
 
         // Copy from upload heap into the vid mem image
         {
@@ -106,9 +106,10 @@ namespace LeoVultana_VK
             copyBarrier[0].subresourceRange.levelCount = 1;
             copyBarrier[0].subresourceRange.layerCount = 1;
             vkCmdPipelineBarrier(
-                pUploadHeap->GetCommandList(), 
-                VK_PIPELINE_STAGE_HOST_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 
-                0, 0, nullptr, 0, 
+                pUploadHeap->GetCommandList(),
+                VK_PIPELINE_STAGE_HOST_BIT,
+                VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0,
+                nullptr, 0,
                 nullptr, 1, copyBarrier);
 
             VkBufferImageCopy region = {};
@@ -119,7 +120,7 @@ namespace LeoVultana_VK
             region.imageExtent.depth = 1;
             vkCmdCopyBufferToImage(
                 pUploadHeap->GetCommandList(), 
-                pUploadHeap->GetResource(), mTexture2D, 
+                pUploadHeap->GetResource(), mTexture2D,
                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
 
             VkImageMemoryBarrier useBarrier[1] = {};
@@ -135,7 +136,7 @@ namespace LeoVultana_VK
             useBarrier[0].subresourceRange.levelCount = 1;
             useBarrier[0].subresourceRange.layerCount = 1;
             vkCmdPipelineBarrier(
-                pUploadHeap->GetCommandList(), 
+                pUploadHeap->GetCommandList(),
                 VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 
                 0, 0, nullptr, 0, 
                 nullptr, 1, useBarrier);
@@ -245,7 +246,7 @@ namespace LeoVultana_VK
             &defines, &mFS));
         
 #else
-        VK_CHECK_RESULT(VKCompileFromString(pDevice->GetDevice(), SST_HLSL, VK_SHADER_STAGE_FRAGMENT_BIT, fragShaderTextHLSL, "main", "", &defines, &mFragmentShader);
+        VK_CHECK_RESULT(VKCompileFromString(pDevice->GetDevice(), SST_HLSL, VK_SHADER_STAGE_FRAGMENT_BIT, fragShaderTextHLSL, "main", "", &defines, &mFS);
 #endif
         mShaderStages.clear();
         mShaderStages.push_back(mVS);

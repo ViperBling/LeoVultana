@@ -36,10 +36,10 @@ void GLTFSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t*
         mFullScreenMode = jData.value("presentationMode", mFullScreenMode);
         m_activeScene = jData.value("activeScene", m_activeScene);
         m_activeCamera = jData.value("activeCamera", m_activeCamera);
-        mIsCPUValidationLayerEnabled = jData.value("CpuValidationLayerEnabled", mIsCPUValidationLayerEnabled);
-        mIsGPUValidationLayerEnabled = jData.value("GpuValidationLayerEnabled", mIsGPUValidationLayerEnabled);
+        mIsCPUValidationLayerEnabled = jData.value("CPUValidationLayerEnabled", mIsCPUValidationLayerEnabled);
+        mIsGPUValidationLayerEnabled = jData.value("GPUValidationLayerEnabled", mIsGPUValidationLayerEnabled);
         mVsyncEnabled = jData.value("vsync", mVsyncEnabled);
-        mFreeSyncHDROptionEnabled = jData.value("FreesyncHDROptionEnabled", mFreeSyncHDROptionEnabled);
+        mFreeSyncHDROptionEnabled = jData.value("FreeSyncHDROptionEnabled", mFreeSyncHDROptionEnabled);
         m_bIsBenchmarking = jData.value("benchmark", m_bIsBenchmarking);
         m_fontSize = jData.value("fontsize", m_fontSize);
     };

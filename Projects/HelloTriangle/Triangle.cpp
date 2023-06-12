@@ -153,8 +153,8 @@ auto HelloTriangleSample::createGraphicsPipeline() -> void
 void HelloTriangleSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, uint32_t* pHeight)
 {
     // set some default values
-    *pWidth = 1920;
-    *pHeight = 1080;
+    *pWidth = 1280;
+    *pHeight = 720;
     mVsyncEnabled = false;
 
     // read globals
@@ -162,10 +162,10 @@ void HelloTriangleSample::OnParseCommandLine(LPSTR lpCmdLine, uint32_t* pWidth, 
         *pWidth = jData.value("width", *pWidth);
         *pHeight = jData.value("height", *pHeight);
         mFullScreenMode = jData.value("presentationMode", mFullScreenMode);
-        mIsCPUValidationLayerEnabled = jData.value("CpuValidationLayerEnabled", mIsCPUValidationLayerEnabled);
-        mIsGPUValidationLayerEnabled = jData.value("GpuValidationLayerEnabled", mIsGPUValidationLayerEnabled);
+        mIsCPUValidationLayerEnabled = jData.value("CPUValidationLayerEnabled", mIsCPUValidationLayerEnabled);
+        mIsGPUValidationLayerEnabled = jData.value("GPUValidationLayerEnabled", mIsGPUValidationLayerEnabled);
         mVsyncEnabled = jData.value("vsync", mVsyncEnabled);
-        mFreeSyncHDROptionEnabled = jData.value("FreesyncHDROptionEnabled", mFreeSyncHDROptionEnabled);
+        mFreeSyncHDROptionEnabled = jData.value("FreeSyncHDROptionEnabled", mFreeSyncHDROptionEnabled);
     };
 
     // read json globals from commandline

@@ -11,7 +11,7 @@ function(buildProject PROJECT_NAME)
 
     copyTargetCommand("${ScenePath}" ${CMAKE_HOME_DIRECTORY}/Binaries/ copied_common_config${PROJECT_NAME})
 
-    add_executable(${PROJECT_NAME} WIN32 ${PROJECT_SRC})
+    add_executable(${PROJECT_NAME} WIN32 ${PROJECT_SRC} dpiawarescaling.manifest)
     add_dependencies(${PROJECT_NAME} copied_common_config${PROJECT_NAME})
     target_link_libraries(${PROJECT_NAME} LINK_PUBLIC CommonLib LeoVultanaVK ${Vulkan_LIBRARY} ${WINLIBS})
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)

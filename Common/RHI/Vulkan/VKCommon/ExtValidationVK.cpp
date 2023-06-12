@@ -70,10 +70,12 @@ namespace LeoVultana_VK
         if (g_vkCreateDebugReportCallbackEXT)
         {
             VkDebugReportCallbackCreateInfoEXT debugReportCallbackInfo = { VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT };
-            debugReportCallbackInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+            debugReportCallbackInfo.flags = 
+                VK_DEBUG_REPORT_ERROR_BIT_EXT 
+                | VK_DEBUG_REPORT_WARNING_BIT_EXT 
+                | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
             debugReportCallbackInfo.pfnCallback = CustomDebugReportCallback;
             VK_CHECK_RESULT(g_vkCreateDebugReportCallbackEXT(instance, &debugReportCallbackInfo, nullptr, &g_DebugReportCallback))
-
         }
     }
 

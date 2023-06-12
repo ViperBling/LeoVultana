@@ -1,7 +1,7 @@
 {
   "globals": {
-    "CpuValidationLayerEnabled": true,
-    "GpuValidationLayerEnabled": true,
+    "CPUValidationLayerEnabled": true,
+    "GPUValidationLayerEnabled": true,
     "presentationMode": 0,
     "width": 1280,
     "height": 720,
@@ -9,7 +9,7 @@
     "benchmark": false,
     "vsync": false,
     "stablePowerState": false,
-    "FreesyncHDROptionEnabled": false,
+    "FreeSyncHDROptionEnabled": false,
     "fontsize":  13
   },
   "scenes": [

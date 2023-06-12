@@ -94,7 +94,6 @@ private:
     math::Matrix4 ComputeDirectionalLightOrthographicMatrix(const math::Matrix4& mLightView);
 
 public:
-public:
     json j3;
 
     std::string mPath;

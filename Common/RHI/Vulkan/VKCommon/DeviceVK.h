@@ -17,7 +17,7 @@ namespace LeoVultana_VK
     {
     public:
         Device();
-        ~Device();
+        virtual ~Device();
         void OnCreate(const char* pAppName, const char* pEngineName, bool cpuValidationLayerEnabled, bool gpuValidationLayerEnabled, HWND hWnd);
         void SetEssentialInstanceExtensions(bool cpuValidationLayerEnabled, bool gpuValidationLayerEnabled, InstanceProperties *pInstProp);
         void SetEssentialDeviceExtensions(DeviceProperties *pDeviceProp);

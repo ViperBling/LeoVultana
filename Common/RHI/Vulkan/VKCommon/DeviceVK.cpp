@@ -20,17 +20,17 @@ using namespace LeoVultana_VK;
 
 Device::Device()
 {
-
 }
 
 Device::~Device()
 {
-
 }
 
 void Device::OnCreate(
-    const char *pAppName, const char *pEngineName,
-    bool cpuValidationLayerEnabled, bool gpuValidationLayerEnabled, HWND hWnd)
+    const char *pAppName, 
+    const char *pEngineName,
+    bool cpuValidationLayerEnabled, 
+    bool gpuValidationLayerEnabled, HWND hWnd)
 {
     InstanceProperties instProp;
     instProp.Init();
@@ -51,7 +51,8 @@ void Device::OnCreate(
 
 void Device::SetEssentialInstanceExtensions(
     bool cpuValidationLayerEnabled,
-    bool gpuValidationLayerEnabled, InstanceProperties *pInstProp)
+    bool gpuValidationLayerEnabled, 
+    InstanceProperties *pInstProp)
 {
     pInstProp->AddInstanceExtensionName(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
     pInstProp->AddInstanceExtensionName(VK_KHR_SURFACE_EXTENSION_NAME);
@@ -102,7 +103,6 @@ void Device::OnCreateEx(
 
     vkGetPhysicalDeviceProperties2(mPhysicalDevice, &mDeviceProperties2);
 
-#if defined(_WIN32)
     // Create a Win32 Surface
     VkWin32SurfaceCreateInfoKHR win32SurfaceCI{};
     win32SurfaceCI.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
@@ -110,9 +110,6 @@ void Device::OnCreateEx(
     win32SurfaceCI.hinstance = nullptr;
     win32SurfaceCI.hwnd = hWnd;
     VK_CHECK_RESULT(vkCreateWin32SurfaceKHR(mInstance, &win32SurfaceCI, nullptr, &mSurface));
-#else
-    #error platform not supported
-#endif
 
     // Find GPU
     mGraphicsQueueFamilyIndex = UINT32_MAX;
@@ -201,7 +198,7 @@ void Device::OnCreateEx(
     robustness2.pNext = &shaderSubgroupExtendedType;
     robustness2.nullDescriptor = VK_TRUE;
 
-    // 绑定NUL Views
+    // 允许绑定Null View
     VkPhysicalDeviceFeatures2 physicalDeviceFeatures2{};
     physicalDeviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
     physicalDeviceFeatures2.features = physicalDeviceFeatures;

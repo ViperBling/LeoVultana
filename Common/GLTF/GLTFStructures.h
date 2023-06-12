@@ -84,7 +84,8 @@ struct gltfNode
 
 struct NodeMatrixPostTransform
 {
-    gltfNode *pN; math::Matrix4 m;
+    gltfNode *pN; 
+    math::Matrix4 m;
 };
 
 struct gltfScene

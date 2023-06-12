@@ -199,8 +199,7 @@ namespace LeoVultana_VK
         VkAttachmentDescription attachmentDescs[1];
         attachmentDescs[0].format = VK_FORMAT_R16G16B16A16_SFLOAT;
         attachmentDescs[0].samples = VK_SAMPLE_COUNT_1_BIT;
-        // we don't care about the previous contents, this is for a full screen pass with no blending
-        attachmentDescs[0].loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        attachmentDescs[0].loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE; // we don't care about the previous contents, this is for a full screen pass with no blending
         attachmentDescs[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
         attachmentDescs[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         attachmentDescs[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
@@ -224,14 +223,14 @@ namespace LeoVultana_VK
 
         VkSubpassDependency subpassDep{};
         subpassDep.dependencyFlags = 0;
-        subpassDep.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-        subpassDep.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-        subpassDep.srcSubpass = 0;
         subpassDep.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_SHADER_READ_BIT;
         subpassDep.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
         subpassDep.dstSubpass = VK_SUBPASS_EXTERNAL;
+        subpassDep.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+        subpassDep.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        subpassDep.srcSubpass = 0;
 
-        VkRenderPassCreateInfo renderPassCI = {};
+        VkRenderPassCreateInfo renderPassCI{};
         renderPassCI.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
         renderPassCI.pNext = nullptr;
         renderPassCI.attachmentCount = 1;
@@ -283,12 +282,12 @@ namespace LeoVultana_VK
 
         VkSubpassDependency subpassDep{};
         subpassDep.dependencyFlags = 0;
-        subpassDep.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-        subpassDep.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-        subpassDep.srcSubpass = 0;
         subpassDep.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_SHADER_READ_BIT;
         subpassDep.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
         subpassDep.dstSubpass = VK_SUBPASS_EXTERNAL;
+        subpassDep.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+        subpassDep.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        subpassDep.srcSubpass = 0;
 
         VkRenderPassCreateInfo renderPassCI = {};
         renderPassCI.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
@@ -303,7 +302,7 @@ namespace LeoVultana_VK
         VkRenderPass renderPass;
         VK_CHECK_RESULT(vkCreateRenderPass(device, &renderPassCI, nullptr, &renderPass));
 
-        SetResourceName(device, VK_OBJECT_TYPE_RENDER_PASS, (uint64_t)renderPass, "SimpleColorWriteRenderPass");
+        SetResourceName(device, VK_OBJECT_TYPE_RENDER_PASS, (uint64_t)renderPass, "SimpleColorBlendRenderPass");
 
         return renderPass;
     }

@@ -26,7 +26,7 @@ namespace LeoVultana_VK
             VkRenderPass renderPass,
             VkPipelineColorBlendStateCreateInfo *pBlendDesc = nullptr,
             VkSampleCountFlagBits sampleDescCount = VK_SAMPLE_COUNT_1_BIT);
-        void Draw(VkCommandBuffer cmdBuffer, VkDescriptorBufferInfo *pConstantBuffer, VkDescriptorSet descriptorSet = nullptr);
+        void Draw(VkCommandBuffer cmdBuffer, VkDescriptorBufferInfo *pConstantBuffer, VkDescriptorSet descriptorSet = VK_NULL_HANDLE);
 
     private:
         Device* m_pDevice;

@@ -170,7 +170,7 @@ bool Texture::InitFromFile(
     VkImageUsageFlags usageFlags, float cutOff)
 {
     m_pDevice = pDevice;
-    assert(mResource == nullptr);
+    assert(mResource == VK_NULL_HANDLE);
 
     ImgLoader* img = CreateImageLoader(szFilename);
     bool result = img->Load(szFilename, cutOff, &mHeader);

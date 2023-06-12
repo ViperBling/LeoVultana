@@ -257,7 +257,7 @@ void PostProcessPS::Draw(
     // Bind Descriptor sets
     int numUniformOffsets = 0;
     uint32_t uniformOffset = 0;
-    if (pConstantBuffer != nullptr && pConstantBuffer->buffer != nullptr)
+    if (pConstantBuffer != nullptr && pConstantBuffer->buffer != VK_NULL_HANDLE)
     {
         numUniformOffsets = 1;
         uniformOffset = (uint32_t)pConstantBuffer->offset;

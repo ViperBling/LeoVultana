@@ -89,8 +89,8 @@ UINT8 *UploadHeap::SubAllocate(SIZE_T uSize, UINT64 uAlign)
     // make sure resource (and its mips) would fit the upload heap, if not please make the upload heap bigger
     assert(uSize < (size_t)(m_pDataBegin - m_pDataEnd));
 
-    m_pDataCur = reinterpret_cast<UINT8*>(AlignUp(reinterpret_cast<SIZE_T>(m_pDataCur), uAlign));
-    uSize = AlignUp(uSize, uAlign);
+    m_pDataCur = reinterpret_cast<UINT8*>(AlignUp(reinterpret_cast<UINT64>(m_pDataCur), uAlign));
+    uSize = AlignUp((UINT64)uSize, uAlign);
 
     // return nullptr if we ran out of space in the heap
     if ((m_pDataCur >= m_pDataEnd) || (m_pDataCur + uSize >= m_pDataEnd))

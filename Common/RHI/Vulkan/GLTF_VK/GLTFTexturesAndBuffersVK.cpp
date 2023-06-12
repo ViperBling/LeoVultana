@@ -73,7 +73,7 @@ void GLTFTexturesAndBuffers::LoadGeometry()
                     gltfAccessor vbAccessor;
                     m_pGLTFCommon->GetBufferDetails(attributeID, &vbAccessor);
                     VkDescriptorBufferInfo  vbv;
-                    m_pStaticBufferPool->AllocBuffer(vbAccessor.mCount, vbAccessor.mStride, vbAccessor.mData, &vbv);
+                    m_pStaticBufferPool->AllocateBuffer(vbAccessor.mCount, vbAccessor.mStride, vbAccessor.mData, &vbv);
                     mVertexBufferMap[attributeID] = vbv;
                 }
                 // Index Buffer
@@ -88,11 +88,11 @@ void GLTFTexturesAndBuffers::LoadGeometry()
                     {
                         auto* pIndices = (unsigned short*)malloc(ibAccessor.mCount * (2 * ibAccessor.mStride));
                         for (int i = 0; i < ibAccessor.mCount; i++) pIndices[i] = ((unsigned char*)ibAccessor.mData)[i];
-                        m_pStaticBufferPool->AllocBuffer(ibAccessor.mCount, 2 * ibAccessor.mStride, ibAccessor.mData, &ibv);
+                        m_pStaticBufferPool->AllocateBuffer(ibAccessor.mCount, 2 * ibAccessor.mStride, ibAccessor.mData, &ibv);
                     }
                     else
                     {
-                        m_pStaticBufferPool->AllocBuffer(ibAccessor.mCount, ibAccessor.mStride, ibAccessor.mData, &ibv);
+                        m_pStaticBufferPool->AllocateBuffer(ibAccessor.mCount, ibAccessor.mStride, ibAccessor.mData, &ibv);
                     }
                     mIndexBufferMap[indexAccessor] = ibv;
                 }

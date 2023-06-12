@@ -22,10 +22,10 @@ namespace LeoVultana_VK
         const char *pShaderEntryPoint, 
         const char *shaderCompilerParams, 
         const DefineList *pDefines, 
-        char **outSpvData, size_t *outSpvSize)
+        char **outSpvData,
+        size_t *outSpvSize)
     {
         // create glsl file for shader compiler to compile
-        //
         std::string filenameSpv;
         std::string filenameGlsl;
         if (sourceType == SST_GLSL)
@@ -46,7 +46,6 @@ namespace LeoVultana_VK
         ofs.close();
 
         // compute command line to invoke the shader compiler
-        //
         char *stage = nullptr;
         switch (shaderType)
         {
@@ -139,7 +138,7 @@ namespace LeoVultana_VK
 
     VkResult CreateModule(VkDevice device, const char* SpvData, size_t SpvSize, VkShaderModule* pShaderModule)
     {
-        VkShaderModuleCreateInfo moduleCreateInfo = {};
+        VkShaderModuleCreateInfo moduleCreateInfo{};
         moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
         moduleCreateInfo.pCode = (uint32_t*)SpvData;
         moduleCreateInfo.codeSize = SpvSize;

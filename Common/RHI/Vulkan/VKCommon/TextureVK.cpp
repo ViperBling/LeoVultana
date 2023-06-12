@@ -42,26 +42,22 @@ namespace LeoVultana_VK
     }
 }
 
-Texture::Texture() {}
-
-Texture::~Texture() {}
-
 void Texture::OnDestroy()
 {
-//#ifdef USE_VMA
+#ifdef USE_VMA
     if (mResource != VK_NULL_HANDLE)
     {
         vmaDestroyImage(m_pDevice->GetAllocator(), mResource, mImageAlloc);
         mResource = VK_NULL_HANDLE;
     }
-//#else
+#else
     if (mDeviceMemory != VK_NULL_HANDLE)
     {
         vkDestroyImage(m_pDevice->GetDevice(), mResource, nullptr);
         vkFreeMemory(m_pDevice->GetDevice(), mDeviceMemory, nullptr);
         mDeviceMemory = VK_NULL_HANDLE;
     }
-//#endif
+#endif
 }
 
 INT32 Texture::Init(Device *pDevice, VkImageCreateInfo *pCreateInfo, const char *name)
@@ -131,7 +127,7 @@ INT32 Texture::InitRenderTarget(
     imageCI.queueFamilyIndexCount = 0;
     imageCI.pQueueFamilyIndices = nullptr;
     imageCI.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-    imageCI.usage = usage; //TODO
+    imageCI.usage = usage;
     imageCI.flags = flags;
     imageCI.tiling = VK_IMAGE_TILING_OPTIMAL;   // VK_IMAGE_TILING_LINEAR should never be used and will never be faster
 
@@ -252,24 +248,24 @@ bool Texture::InitFromData(
         1, &region);
 
     // prepare to shader read
-        VkImageMemoryBarrier use_barrier = {};
-        use_barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-        use_barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-        use_barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-        use_barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-        use_barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-        use_barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        use_barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        use_barrier.image = mResource;
-        use_barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-        use_barrier.subresourceRange.levelCount = mHeader.mipMapCount;
-        use_barrier.subresourceRange.layerCount = mHeader.arraySize;
-        vkCmdPipelineBarrier(
-            uploadHeap.GetCommandList(), VK_PIPELINE_STAGE_TRANSFER_BIT,
-            VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT|VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            0, 0, nullptr,
-            0, nullptr,
-            1, &use_barrier);
+    VkImageMemoryBarrier use_barrier = {};
+    use_barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+    use_barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+    use_barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+    use_barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+    use_barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+    use_barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    use_barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    use_barrier.image = mResource;
+    use_barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+    use_barrier.subresourceRange.levelCount = mHeader.mipMapCount;
+    use_barrier.subresourceRange.layerCount = mHeader.arraySize;
+    vkCmdPipelineBarrier(
+        uploadHeap.GetCommandList(), VK_PIPELINE_STAGE_TRANSFER_BIT,
+        VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT|VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+        0, 0, nullptr,
+        0, nullptr,
+        1, &use_barrier);
 
     return true;
 }
@@ -425,7 +421,8 @@ VkImage Texture::CreateTextureCommitted(
 
         imageCI.pNext = &formatListInfo;
     }
-    else {
+    else
+    {
         mHeader.format = SetFormatGamma(mHeader.format, useSRGB);
     }
 
@@ -563,7 +560,7 @@ void Texture::LoadAndUpload(Device *pDevice, UploadHeap *pUploadHeap, ImgLoader 
     pUploadHeap->AddPostBarrier(use_barrier);
 }
 
-bool Texture::isCubemap() const
+bool Texture::IsCubeMap() const
 {
     return mHeader.arraySize == 6;
 }

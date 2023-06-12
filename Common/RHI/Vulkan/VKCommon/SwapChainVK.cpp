@@ -133,7 +133,7 @@ void SwapChain::OnCreateWindowSizeDependentResources(
         VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
     };
 
-    for (uint32_t i = 0; i < 4; i++)
+    for (uint32_t i = 0; i < sizeof(compositeAlphaFlags); i++)
     {
         if (surfaceCapabilities.supportedCompositeAlpha & compositeAlphaFlags[i])
         {

@@ -12,8 +12,10 @@ namespace LeoVultana_VK
         void OnDestroy();
 
         void OnCreateWindowSizeDependentResources(
-            uint32_t dwWidth, uint32_t dwHeight,
-            bool bVSyncOn, DisplayMode = DISPLAYMODE_SDR,
+            uint32_t dwWidth,
+            uint32_t dwHeight,
+            bool bVSyncOn,
+            DisplayMode = DISPLAYMODE_SDR,
             PresentationMode fullScreenMode = PRESENTATIONMODE_WINDOWED,
             bool enableLocalDimming = true);
         void OnDestroyWindowSizeDependentResources();
@@ -57,29 +59,30 @@ namespace LeoVultana_VK
         void DestroyFrameBuffers();
 
     private:
-        HWND mHwnd;
-        Device* m_pDevice;
+        HWND                            mHwnd;
+        Device*                         m_pDevice;
 
-        VkSwapchainKHR mSwapChain;
-        VkSurfaceFormatKHR mSwapChainFormat;
+        VkSwapchainKHR                  mSwapChain;
+        VkSurfaceFormatKHR              mSwapChainFormat;
 
-        VkQueue mPresentQueue;
+        VkQueue                         mPresentQueue;
 
-        DisplayMode mDisplayMode = DISPLAYMODE_SDR;
-        VkRenderPass mRenderPassSwapChain{};
+        DisplayMode                     mDisplayMode = DISPLAYMODE_SDR;
+        VkRenderPass                    mRenderPassSwapChain{};
 
-        std::vector<VkImage> mImages;
-        std::vector<VkImageView> mImageViews;
-        std::vector<VkFramebuffer> mFrameBuffers;
+        std::vector<VkImage>            mImages;
+        std::vector<VkImageView>        mImageViews;
+        std::vector<VkFramebuffer>      mFrameBuffers;
 
-        std::vector<VkFence> mCmdBufferExecutedFences;
-        std::vector<VkSemaphore> mImageAvailableSemaphores;
-        std::vector<VkSemaphore> mRenderFinishedSemaphores;
+        std::vector<VkFence>            mCmdBufferExecutedFences;
+        std::vector<VkSemaphore>        mImageAvailableSemaphores;
+        std::vector<VkSemaphore>        mRenderFinishedSemaphores;
 
-        uint32_t mImageIndex = 0;
-        uint32_t mBackBufferCount{};
-        uint32_t mSemaphoreIndex{}, mPrevSemaphoreIndex{};
+        uint32_t                        mImageIndex = 0;
+        uint32_t                        mBackBufferCount{};
+        uint32_t                        mSemaphoreIndex{};
+        uint32_t                        mPrevSemaphoreIndex{};
 
-        bool m_bVSyncOn = false;
+        bool                            m_bVSyncOn = false;
     };
 }

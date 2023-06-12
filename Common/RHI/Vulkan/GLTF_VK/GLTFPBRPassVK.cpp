@@ -384,7 +384,7 @@ void GLTFPBRPass::CreateDescriptorTableForMaterialTextures(
     // for each entry we create a #define with that texture name that hold the id of the texture. That way the PS knows in what slot is each texture.
     {
         // allocate descriptor table for the textures
-        m_pResourceViewHeaps->AllocDescriptor(
+        m_pResourceViewHeaps->AllocateDescriptor(
             descCounts, nullptr,
             &tfMat->mTextureDescSetLayout,
             &tfMat->mTextureDescSet);

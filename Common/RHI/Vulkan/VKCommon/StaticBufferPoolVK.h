@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "DeviceVK.h"
 #include "ResourceViewHeapsVK.h"
@@ -17,10 +17,10 @@ namespace LeoVultana_VK
         void OnDestroy();
 
         // Allocates a IB/VB and returns a pointer to fill it + a descriptot
-        bool AllocBuffer(uint32_t numbeOfVertices, uint32_t strideInBytes, void **pData, VkDescriptorBufferInfo *pOut);
+        bool AllocateBuffer(uint32_t numberOfVertices, uint32_t strideInBytes, void **pData, VkDescriptorBufferInfo *pOut);
 
         // Allocates a IB/VB and fill it with pInitData, returns a descriptor
-        bool AllocBuffer(uint32_t numbeOfIndices, uint32_t strideInBytes, const void *pInitData, VkDescriptorBufferInfo *pOut);
+        bool AllocateBuffer(uint32_t numberOfIndices, uint32_t strideInBytes, const void *pInitData, VkDescriptorBufferInfo *pOut);
 
         // if using vidmem this kicks the upload from the upload heap to the video mem
         void UploadData(VkCommandBuffer cmdBuffer);
@@ -29,21 +29,22 @@ namespace LeoVultana_VK
         void FreeUploadHeap();
 
     private:
-        Device* m_pDevice;
-        std::mutex mMutex{};
-        bool m_bUseVidMem = true;
-        char* m_pData = nullptr;
-        uint32_t mMemOffset = 0;
-        uint32_t mTotalMemSize = 0;
+        Device*         m_pDevice;
+        std::mutex      mMutex{};
+        bool            m_bUseVidMem = true;            // 使用显存
+        char*           m_pData = nullptr;
+        uint32_t        mMemOffset = 0;
+        uint32_t        mTotalMemSize = 0;
 
-        VkBuffer mBuffer;
-        VkBuffer mBufferVid;
+        VkBuffer        mBuffer;
+        VkBuffer        mBufferVid;
 
-//#ifdef USE_VMA
-        VmaAllocation mBufferAlloc{};
-        VmaAllocation mBufferAllocVid{};
-
-        VkDeviceMemory mDeviceMemory{};
-        VkDeviceMemory mDeviceMemoryVid{};
+#ifdef USE_VMA
+        VmaAllocation   mBufferAlloc{};
+        VmaAllocation   mBufferAllocVid{};
+#else
+        VkDeviceMemory  mDeviceMemory{};
+        VkDeviceMemory  mDeviceMemoryVid{};
+#endif
     };
 }

@@ -21,8 +21,8 @@ namespace LeoVultana_VK
 
             // set indices
             mNumIndices = (uint32_t)indices.size();
-            pStaticBufferPool->AllocBuffer(mNumIndices, sizeof(short), indices.data(), &mIBV);
-            pStaticBufferPool->AllocBuffer((uint32_t)(vertices.size() / 3), (uint32_t)(3 * sizeof(float)), vertices.data(), &mVBV);
+            pStaticBufferPool->AllocateBuffer(mNumIndices, sizeof(short), indices.data(), &mIBV);
+            pStaticBufferPool->AllocateBuffer((uint32_t)(vertices.size() / 3), (uint32_t)(3 * sizeof(float)), vertices.data(), &mVBV);
         }
 
         void OnDestroy() {}

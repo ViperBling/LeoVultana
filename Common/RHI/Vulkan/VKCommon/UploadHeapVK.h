@@ -54,8 +54,8 @@ namespace LeoVultana_VK
 
         VkFence mFence;
 
-        UINT8* m_pDataBegin = nullptr;  // starting position of upload heap
-        UINT8* m_pDataCur   = nullptr;    // current position of upload heap
-        UINT8* m_pDataEnd   = nullptr;    // ending position of upload heap
+        UINT8* m_pDataBegin = nullptr;      // starting position of upload heap
+        UINT8* m_pDataCur   = nullptr;      // current position of upload heap
+        UINT8* m_pDataEnd   = nullptr;      // ending position of upload heap
     };
 }

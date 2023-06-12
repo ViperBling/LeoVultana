@@ -281,7 +281,7 @@ void GLTFBaseMeshPass::CreateDescTableForMaterialTextures(
     // for each entry we create a #define with that texture name that hold the id of the texture. That way the PS knows in what slot is each texture.      
     {
         // allocate descriptor table for the textures
-        m_pResourceViewHeaps->AllocDescriptor(descriptorCounts, nullptr, &gltfMat->mTextureDescSetLayout, &gltfMat->mTexturesDescSet);
+        m_pResourceViewHeaps->AllocateDescriptor(descriptorCounts, nullptr, &gltfMat->mTextureDescSetLayout, &gltfMat->mTexturesDescSet);
 
         uint32_t cnt = 0;
 

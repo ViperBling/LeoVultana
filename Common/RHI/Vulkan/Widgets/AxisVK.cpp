@@ -26,7 +26,7 @@ void LeoVultana_VK::Axis::OnCreate(
     mIndexType = VK_INDEX_TYPE_UINT16;
 
     void* pDest;
-    m_pStaticBufferPool->AllocBuffer(mNumIndices, sizeof(short), &pDest, &mIBV);
+    m_pStaticBufferPool->AllocateBuffer(mNumIndices, sizeof(short), &pDest, &mIBV);
     memcpy(pDest, indices, sizeof(short) * mNumIndices);
 
     // Set Vertex
@@ -40,7 +40,7 @@ void LeoVultana_VK::Axis::OnCreate(
         0,  0,  0,   0,0,1,
         0,  0,  1,   0,0,1,
     };
-    m_pStaticBufferPool->AllocBuffer(6, 6 * sizeof(float), vertices, &mVBV);
+    m_pStaticBufferPool->AllocateBuffer(6, 6 * sizeof(float), vertices, &mVBV);
 
     // Vertex Shader
     // the vertex shader

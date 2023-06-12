@@ -26,7 +26,7 @@ void CheckerBoardFloor::OnCreate(
         0, 2, 3};
     mNumIndices = _countof(indices);
     mIndexType = VK_INDEX_TYPE_UINT16;
-    m_pStaticBufferPool->AllocBuffer(mNumIndices, sizeof(short), indices, &mIBV);
+    m_pStaticBufferPool->AllocateBuffer(mNumIndices, sizeof(short), indices, &mIBV);
 
     // Set Vertex
     float vertices[] = {
@@ -35,7 +35,7 @@ void CheckerBoardFloor::OnCreate(
         1, 0, 1,      1, 1,
         -1, 0, 1,      0, 1,
     };
-    m_pStaticBufferPool->AllocBuffer(4, 6 * sizeof(float), vertices, &mVBV);
+    m_pStaticBufferPool->AllocateBuffer(4, 6 * sizeof(float), vertices, &mVBV);
 
     // Vertex Shader
     // the vertex shader

@@ -85,7 +85,7 @@ void GLTFDepthPass::OnCreate(
                         gltfMat->mTextureCount = 1;
                         gltfMat->mDefines["ID_baseColorTexture"] = "0";
                         gltfMat->mDefines["ID_baseTexCoord"] = std::to_string(GetElementInt(pbrMetallicRoughness, "baseColorTexture/texCoord", 0));
-                        m_pResourceViewHeaps->AllocDescriptor(gltfMat->mTextureCount, &mSampler, &gltfMat->mDescSetLayout, &gltfMat->mDescSet);
+                        m_pResourceViewHeaps->AllocateDescriptor(gltfMat->mTextureCount, &mSampler, &gltfMat->mDescSetLayout, &gltfMat->mDescSet);
                         VkImageView textureView = pGLTFTexturesAndBuffers->GetTextureViewByID(id);
                         SetDescriptorSet(m_pDevice->GetDevice(), 0, textureView, &mSampler, gltfMat->mDescSet);
                     }

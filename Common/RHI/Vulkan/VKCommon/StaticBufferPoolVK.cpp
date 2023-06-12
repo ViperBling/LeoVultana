@@ -22,7 +22,7 @@ void StaticBufferPool::OnCreate(Device *pDevice, uint32_t totalMemSize, bool bUs
     if (bUseVidMem) bufferInfo.usage |= VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 
 #ifdef USE_VMA
-    VmaAllocationCreateInfo allocInfo = {};
+    VmaAllocationCreateInfo allocInfo{};
     allocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
     allocInfo.flags = VMA_ALLOCATION_CREATE_USER_DATA_COPY_STRING_BIT;
     allocInfo.pUserData = (void*)name;
@@ -36,18 +36,18 @@ void StaticBufferPool::OnCreate(Device *pDevice, uint32_t totalMemSize, bool bUs
 
 #else
     // create the buffer, allocate it in SYSTEM memory, bind it and map it
-    VkBufferCreateInfo bufferInfo = {};
-    bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    bufferInfo.pNext = nullptr;
-    bufferInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+    VkBufferCreateInfo deviceBufferCI{};
+    deviceBufferCI.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    deviceBufferCI.pNext = nullptr;
+    deviceBufferCI.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
     if (bUseVidMem)
-        bufferInfo.usage |= VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-    bufferInfo.size = mTotalMemSize;
-    bufferInfo.queueFamilyIndexCount = 0;
-    bufferInfo.pQueueFamilyIndices = nullptr;
-    bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-    bufferInfo.flags = 0;
-    VK_CHECK_RESULT(vkCreateBuffer(m_pDevice->GetDevice(), &bufferInfo, nullptr, &mBuffer));
+        deviceBufferCI.usage |= VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+    deviceBufferCI.size = mTotalMemSize;
+    deviceBufferCI.queueFamilyIndexCount = 0;
+    deviceBufferCI.pQueueFamilyIndices = nullptr;
+    deviceBufferCI.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    deviceBufferCI.flags = 0;
+    VK_CHECK_RESULT(vkCreateBuffer(m_pDevice->GetDevice(), &deviceBufferCI, nullptr, &mBuffer));
 
     // allocate the buffer in system memory
     VkMemoryRequirements memReqs;
@@ -82,7 +82,7 @@ void StaticBufferPool::OnCreate(Device *pDevice, uint32_t totalMemSize, bool bUs
         bufferVidCI.size = mTotalMemSize;
         bufferVidCI.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
 
-        VmaAllocationCreateInfo allocVidCI = {};
+        VmaAllocationCreateInfo allocVidCI{};
         allocVidCI.usage = VMA_MEMORY_USAGE_GPU_ONLY;
         allocVidCI.flags = VMA_ALLOCATION_CREATE_USER_DATA_COPY_STRING_BIT;
         allocVidCI.pUserData = (void*)name;
@@ -154,16 +154,17 @@ void StaticBufferPool::OnDestroy()
     }
 }
 
-bool StaticBufferPool::AllocBuffer(
-    uint32_t numbeOfVertices,
+bool StaticBufferPool::AllocateBuffer(
+    uint32_t numberOfVertices,
     uint32_t strideInBytes,
     void **pData,
     VkDescriptorBufferInfo *pOut)
 {
     std::lock_guard<std::mutex> lock(mMutex);
 
-    uint32_t size = AlignUp(numbeOfVertices* strideInBytes, 256u);
+    uint32_t size = AlignUp(numberOfVertices * strideInBytes, 256u);
     assert(mMemOffset + size < mTotalMemSize);
+    if (mMemOffset + size >= mTotalMemSize) return false;
 
     *pData = (void *)(m_pData + mMemOffset);
 
@@ -176,16 +177,16 @@ bool StaticBufferPool::AllocBuffer(
     return true;
 }
 
-bool StaticBufferPool::AllocBuffer(
-    uint32_t numbeOfIndices,
+bool StaticBufferPool::AllocateBuffer(
+    uint32_t numberOfIndices,
     uint32_t strideInBytes,
     const void *pInitData,
     VkDescriptorBufferInfo *pOut)
 {
     void *pData;
-    if (AllocBuffer(numbeOfIndices, strideInBytes, &pData, pOut))
+    if (AllocateBuffer(numberOfIndices, strideInBytes, &pData, pOut))
     {
-        memcpy(pData, pInitData, numbeOfIndices * strideInBytes);
+        memcpy(pData, pInitData, numberOfIndices * strideInBytes);
         return true;
     }
     return false;

@@ -1,18 +1,18 @@
 include(${CMAKE_HOME_DIRECTORY}/CMake/Common.cmake)
 
 #set(GLTFVK_SRC
-#    GLTF_VK/GLTFBBoxPassVK.h
-#    GLTF_VK/GLTFBBoxPassVK.cpp
-#    GLTF_VK/GLTFDepthPassVK.cpp
-#    GLTF_VK/GLTFDepthPassVK.h
-#    GLTF_VK/GLTFHelpersVK.cpp
-#    GLTF_VK/GLTFHelpersVK.h
-#    GLTF_VK/GLTFMotionVectorsPassVK.h
-#    GLTF_VK/GLTFMotionVectorsPassVK.cpp
-#    GLTF_VK/GLTFPBRPassVK.cpp
-#    GLTF_VK/GLTFPBRPassVK.h
-#    GLTF_VK/GLTFTexturesAndBuffersVK.h
-#    GLTF_VK/GLTFTexturesAndBuffersVK.cpp)
+#    GLTFRenderPasses/GLTFBBoxPassVK.h
+#    GLTFRenderPasses/GLTFBBoxPassVK.cpp
+#    GLTFRenderPasses/GLTFDepthPassVK.cpp
+#    GLTFRenderPasses/GLTFDepthPassVK.h
+#    GLTFRenderPasses/GLTFHelpersVK.cpp
+#    GLTFRenderPasses/GLTFHelpersVK.h
+#    GLTFRenderPasses/GLTFMotionVectorsPassVK.h
+#    GLTFRenderPasses/GLTFMotionVectorsPassVK.cpp
+#    GLTFRenderPasses/GLTFPBRPassVK.cpp
+#    GLTFRenderPasses/GLTFPBRPassVK.h
+#    GLTFRenderPasses/GLTFTexturesAndBuffersVK.h
+#    GLTFRenderPasses/GLTFTexturesAndBuffersVK.cpp)
 #
 #set(BaseVK_SRC
 #    CommandListRingVK.h CommandListRingVK.cpp

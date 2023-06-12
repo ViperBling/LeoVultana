@@ -18,7 +18,7 @@
 // THE SOFTWARE.
 #pragma once
 
-#include "GLTFSamplePCH.h"
+#include "ProjectPCH.h"
 #include "GLTF/GLTFCommon.h"
 #include "Utilities/Async.h"
 #include "RHI/Vulkan/PostProcess/MagnifierPS.h"

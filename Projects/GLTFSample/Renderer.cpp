@@ -457,16 +457,16 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
         pPerFrame = m_pGLTFTexturesAndBuffers->m_pGLTFCommon->SetPerFrameData(Cam);
 
         // Set some lighting factors
-        pPerFrame->iblFactor = pState->IBLFactor;
-        pPerFrame->emissiveFactor = pState->EmissiveFactor;
-        pPerFrame->invScreenResolution[0] = 1.0f / ((float)m_Width);
-        pPerFrame->invScreenResolution[1] = 1.0f / ((float)m_Height);
+        pPerFrame->mIBLFactor = pState->IBLFactor;
+        pPerFrame->mEmissiveFactor = pState->EmissiveFactor;
+        pPerFrame->mInvScreenResolution[0] = 1.0f / ((float)m_Width);
+        pPerFrame->mInvScreenResolution[1] = 1.0f / ((float)m_Height);
 
-        pPerFrame->wireframeOptions.setX(pState->WireframeColor[0]);
-        pPerFrame->wireframeOptions.setY(pState->WireframeColor[1]);
-        pPerFrame->wireframeOptions.setZ(pState->WireframeColor[2]);
-        pPerFrame->wireframeOptions.setW(pState->WireframeMode == UIState::WireframeMode::WIREFRAME_MODE_SOLID_COLOR ? 1.0f : 0.0f);
-        pPerFrame->lodBias = 0.0f;
+        pPerFrame->mWireframeOptions.setX(pState->WireframeColor[0]);
+        pPerFrame->mWireframeOptions.setY(pState->WireframeColor[1]);
+        pPerFrame->mWireframeOptions.setZ(pState->WireframeColor[2]);
+        pPerFrame->mWireframeOptions.setW(pState->WireframeMode == UIState::WireframeMode::WIREFRAME_MODE_SOLID_COLOR ? 1.0f : 0.0f);
+        pPerFrame->mLODBias = 0.0f;
         m_pGLTFTexturesAndBuffers->SetPerFrameConstants();
         m_pGLTFTexturesAndBuffers->SetSkinningMatricesForSkeletons();
     }
@@ -503,7 +503,7 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
 
             // Set per frame constant buffer values
             GLTFDepthPass::PerFrame* cbPerFrame = m_GLTFDepth->SetPerFrameConstants();
-            cbPerFrame->mViewProj = pPerFrame->lights[ShadowMap->LightIndex].mLightViewProj;
+            cbPerFrame->mViewProj = pPerFrame->mLights[ShadowMap->LightIndex].mLightViewProj;
 
             m_GLTFDepth->Draw(cmdBuf1);
 
@@ -570,9 +570,9 @@ void Renderer::OnRender(const UIState* pState, const Camera& Cam, SwapChain* pSw
                 math::Vector4 vCenter = math::Vector4(0.0f, 0.0f, 0.5f, 0.0f);
                 math::Vector4 vRadius = math::Vector4(1.0f, 1.0f, 0.5f, 0.0f);
                 math::Vector4 vColor = math::Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-                for (uint32_t i = 0; i < pPerFrame->lightCount; i++)
+                for (uint32_t i = 0; i < pPerFrame->mLightCount; i++)
                 {
-                    math::Matrix4 spotlightMatrix = math::inverse(pPerFrame->lights[i].mLightViewProj);
+                    math::Matrix4 spotlightMatrix = math::inverse(pPerFrame->mLights[i].mLightViewProj);
                     math::Matrix4 worldMatrix = pPerFrame->mCameraCurrViewProj * spotlightMatrix;
                     m_WireframeBox.Draw(cmdBuf1, &m_Wireframe, worldMatrix, vCenter, vRadius, vColor);
                 }

@@ -17,7 +17,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "GLTFSamplePCH.h"
+#include "ProjectPCH.h"
 
 #include "UI.h"
 #include "GLTFSample.h"

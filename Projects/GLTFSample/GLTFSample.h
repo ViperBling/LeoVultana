@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GLTFSamplePCH.h"
+#include "ProjectPCH.h"
 #include "GLTF/GLTFCommon.h"
 #include "Renderer.h"
 #include "UI.h"

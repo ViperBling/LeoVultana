@@ -1,7 +1,7 @@
 #include "RHI/Vulkan/VKCommon/PCHVK.h"
 #include "GLTFBaseMeshPassVK.h"
 #include "Async.h"
-#include "RHI/Vulkan/GLTF_VK/GLTFHelpersVK.h"
+#include "GLTFHelpersVK.h"
 #include "RHI/Vulkan/VKCommon/HelperVK.h"
 #include "RHI/Vulkan/VKCommon/ShaderCompilerHelperVK.h"
 #include "RHI/Vulkan/VKCommon/ExtDebugUtilsVK.h"

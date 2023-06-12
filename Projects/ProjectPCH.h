@@ -43,10 +43,10 @@
 #include "Utilities/ShaderCompilerCache.h"
 
 
-#include "RHI/Vulkan/GLTF_VK/GLTFPBRPassVK.h"
-#include "RHI/Vulkan/GLTF_VK/GLTFBBoxPassVK.h"
-#include "RHI/Vulkan/GLTF_VK/GLTFBaseMeshPassVK.h"
-#include "RHI/Vulkan/GLTF_VK/GLTFDepthPassVK.h"
+#include "RHI/Vulkan/GLTFRenderPasses/GLTFPBRPassVK.h"
+#include "RHI/Vulkan/GLTFRenderPasses/GLTFBBoxPassVK.h"
+#include "RHI/Vulkan/GLTFRenderPasses/GLTFBaseMeshPassVK.h"
+#include "RHI/Vulkan/GLTFRenderPasses/GLTFDepthPassVK.h"
 
 #include "Utilities/Misc.h"
 #include "Utilities/Camera.h"

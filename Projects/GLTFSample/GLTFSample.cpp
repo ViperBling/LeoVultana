@@ -1,4 +1,4 @@
-#include "GLTFSamplePCH.h"
+
 #include <intrin.h>
 #include "GLTFSample.h"
 #include "Utilities/DXCHelper.h"

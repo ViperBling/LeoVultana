@@ -47,25 +47,25 @@ namespace LeoVultana_VK
         void SetSkinningMatricesForSkeletons();
         void SetPerFrameConstants();
     public:
-        GLTFCommon*             m_pGLTFCommon;
-        VkDescriptorBufferInfo  mPerFrameConstants;
+        GLTFCommon*                             m_pGLTFCommon;
+        VkDescriptorBufferInfo                  mPerFrameConstants;
 
     private:
-        Device*         m_pDevice;
-        UploadHeap*     m_pUploadHeap;
+        Device*                                 m_pDevice;
+        UploadHeap*                             m_pUploadHeap;
 
-        const json*     m_pTextureNodes;
+        const json*                             m_pTextureNodes;
 
-        std::vector<Texture>        mTextures;
-        std::vector<VkImageView>    mTextureViews;
+        std::vector<Texture>                    mTextures;
+        std::vector<VkImageView>                mTextureViews;
 
-        std::map<int, VkDescriptorBufferInfo> mSkeletonMatricesBuffer;
+        std::map<int, VkDescriptorBufferInfo>   mSkeletonMatricesBuffer;
 
-        StaticBufferPool*   m_pStaticBufferPool;
-        DynamicBufferRing*  m_pDynamicBufferRing;
+        StaticBufferPool*                       m_pStaticBufferPool;
+        DynamicBufferRing*                      m_pDynamicBufferRing;
 
         // Maps GLTF ids into views
-        std::map<int, VkDescriptorBufferInfo> mVertexBufferMap;
-        std::map<int, VkDescriptorBufferInfo> mIndexBufferMap;
+        std::map<int, VkDescriptorBufferInfo>   mVertexBufferMap;
+        std::map<int, VkDescriptorBufferInfo>   mIndexBufferMap;
     };
 }
